@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Figma MCP mask helpers (Tailwind does not emit these by default) */
+@layer utilities {
+  .mask-alpha {
+    mask-type: alpha;
+    -webkit-mask-type: alpha;
+  }
+  .mask-intersect {
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+  .mask-no-clip {
+    mask-clip: no-clip;
+    -webkit-mask-clip: no-clip;
+  }
+  .mask-no-repeat {
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+}
+
+@keyframes finaxis-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-finaxis-float {
+  animation: finaxis-float 5s ease-in-out infinite;
+}
+
+.animate-finaxis-float-delayed {
+  animation: finaxis-float 5.5s ease-in-out 0.4s infinite;
+}
+
+/* Hero headline: fluid font-size (no transform: scale) so nothing paints behind the nav */
+.finaxis-hero-green-wrap {
+  display: block;
+  line-height: 0.9;
+}
+
+/* Hero main line: ultra-condensed caps like Figma “WE EQUIP BUSINESSES…” block */
+.finaxis-hero-green-wrap p,
+.finaxis-hero-display {
+  font-family: "Bebas Neue", "Anton", Impact, "Arial Narrow", sans-serif;
+  font-weight: 400;
+  font-size: clamp(5rem, 11.5cqi, 17.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.finaxis-hero-headline-cq {
+  container-type: inline-size;
+}
+
+.finaxis-hero-serif-figma {
+  -webkit-text-stroke: 0.45px rgb(255, 255, 255);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 1px rgb(255, 255, 255),
+    -0.35px -0.35px 0 rgb(255, 255, 255),
+    0.35px -0.35px 0 rgb(255, 255, 255),
+    -0.35px 0.35px 0 rgb(255, 255, 255),
+    0.35px 0.35px 0 rgb(255, 255, 255);
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
