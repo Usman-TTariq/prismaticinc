@@ -4,7 +4,8 @@ import FinaxisHome from "./FinaxisHome";
 
 /** Figma artboard width — layout is authored in px at this width. */
 const FINAXIS_CANVAS_W = 1920;
-const FINAXIS_FALLBACK_H = 8600;
+/** Only used before first layout measure; real height comes from scrollHeight. */
+const FINAXIS_FALLBACK_H = 8190;
 
 export default function App() {
   const innerRef = useRef<HTMLDivElement>(null);
@@ -35,8 +36,8 @@ export default function App() {
     const el = innerRef.current;
     if (!el) return;
     const measure = () => {
-      const h = Math.max(el.scrollHeight, FINAXIS_FALLBACK_H);
-      setContentH(h);
+      const sh = el.scrollHeight;
+      setContentH(sh > 0 ? sh : FINAXIS_FALLBACK_H);
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -48,7 +49,7 @@ export default function App() {
   const scaledH = contentH * scale;
 
   return (
-    <div className="min-h-svh w-full overflow-x-hidden bg-[#f7f7f7] supports-[min-height:100dvh]:min-h-[100dvh]">
+    <div className="w-full overflow-x-hidden bg-[#f7f7f7]">
       <div className="mx-auto flex w-full max-w-full justify-center overflow-x-hidden" style={{ minHeight: scaledH }}>
         <div className="relative shrink-0" style={{ width: scaledW, height: scaledH }}>
           <div

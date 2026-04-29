@@ -173,4 +173,5 @@ body,
   min-height: 100%;
   max-width: 100%;
   overflow-x: clip;
+  background-color: #f7f7f7;
 }

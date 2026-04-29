@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 
-const FINAXIS_LEAD_POPUP_STORAGE_KEY = "finaxis-lead-popup-dismissed";
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
 
 const imgElements361 = "https://www.figma.com/api/mcp/asset/385fcfb8-6ac7-4d5f-b71e-f55a3a920ead";
@@ -217,13 +217,6 @@ export default function FinaxisHome() {
   });
 
   useEffect(() => {
-    let dismissed = false;
-    try {
-      dismissed = Boolean(localStorage.getItem(FINAXIS_LEAD_POPUP_STORAGE_KEY));
-    } catch {
-      /* private mode */
-    }
-    if (dismissed) return;
     const id = window.setTimeout(() => {
       setMenuOpen(false);
       setLeadModalOpen(true);
@@ -235,11 +228,6 @@ export default function FinaxisHome() {
     setLeadModalOpen(false);
     setLeadSubmitted(false);
     setLeadForm({ name: "", email: "", phone: "", message: "" });
-    try {
-      localStorage.setItem(FINAXIS_LEAD_POPUP_STORAGE_KEY, "1");
-    } catch {
-      /* ignore */
-    }
   }, []);
 
   const openLeadPopup = useCallback(() => {
@@ -274,7 +262,7 @@ export default function FinaxisHome() {
   return (
     <div
       id="finaxis-top"
-      className="relative min-h-[8350px] w-full bg-[#f7f7f7]"
+      className="relative min-h-[8190px] w-full bg-[#f7f7f7]"
       data-node-id="76:136"
       data-name="home"
     >
@@ -715,19 +703,20 @@ export default function FinaxisHome() {
         </div>
       </aside>
 
-      {leadModalOpen ? (
-        <>
-          <div
-            className="fixed inset-0 z-[120] bg-black/55 backdrop-blur-[3px] transition-opacity"
-            aria-hidden
-            onClick={dismissLeadPopup}
-          />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="finaxis-lead-title"
-            className="fixed top-1/2 left-1/2 z-[121] w-[calc(100%-1.5rem)] max-w-[min(92vw,720px)] -translate-x-1/2 -translate-y-1/2 rounded-[22px] border border-[#272727] border-solid bg-[#ebebeb] p-2 shadow-[0_24px_64px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.4)_inset] sm:p-2.5"
-          >
+      {leadModalOpen && typeof document !== "undefined"
+        ? createPortal(
+            <>
+              <div
+                className="fixed inset-0 z-[9998] bg-black/55 backdrop-blur-[3px] transition-opacity"
+                aria-hidden
+                onClick={dismissLeadPopup}
+              />
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="finaxis-lead-title"
+                className="fixed top-1/2 left-1/2 z-[9999] w-[calc(100%-1.5rem)] max-w-[min(92vw,720px)] -translate-x-1/2 -translate-y-1/2 rounded-[22px] border border-[#272727] border-solid bg-[#ebebeb] p-2 shadow-[0_24px_64px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.4)_inset] sm:p-2.5"
+              >
             <div className="relative max-h-[min(88vh,720px)] overflow-hidden rounded-[16px] border border-[#1e9500] border-solid bg-gradient-to-br from-white via-[#f9fdf9] to-[rgba(30,149,0,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
               <button
                 type="button"
@@ -892,8 +881,10 @@ export default function FinaxisHome() {
               </div>
             </div>
           </div>
-        </>
-      ) : null}
+            </>,
+            document.body,
+          )
+        : null}
 
       <div className="absolute h-[560px] left-0 top-[2201px] w-[1920px]" data-node-id="76:364">
         <div className="absolute flex h-[560px] items-center justify-center left-0 top-0 w-[1920px]">
@@ -1099,20 +1090,42 @@ export default function FinaxisHome() {
           <div className="-translate-y-1/2 absolute flex flex-col font-['Satoshi:Medium',sans-serif] justify-center leading-[0] left-[86px] not-italic text-[35px] text-white top-[763.5px] tracking-[-2.1px] w-[475px]" data-node-id="76:404">
             <p className="leading-[normal]">Choosing us means you are choosing quick, safe financing for POS systems with intuitive POS software and hardware that streamlines your business logistics</p>
           </div>
-          <div className="absolute h-[360px] left-[87px] top-[53px] w-[474px]" data-node-id="76:405">
-            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRectangle4049} />
-          </div>
-          <div className="absolute border-2 border-solid border-white h-[35px] left-[106px] top-[71px] w-[83px]" data-node-id="76:406" />
-          <div className="absolute contents left-[93px] top-[59px]" data-node-id="76:407" data-name="Mask group">
-            <div className="absolute flex items-center justify-center left-[83px] size-[694.495px] top-[-6px]">
-              <div className="flex-none rotate-[-116.48deg]">
-                <div className="mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[10px_65px] mask-size-[462px_348px] relative size-[517.917px]" data-node-id="76:409" style={{ maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')` }} data-name="3d-wireframe-outline-polygon-sphere-globe-shape 1">
-                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={img3DWireframeOutlinePolygonSphereGlobeShape2} />
+          <div
+            className="absolute left-[87px] top-[53px] z-[1] h-[360px] w-[474px] overflow-hidden"
+            data-node-id="76:405-wrap"
+            data-name="Wireframe card"
+          >
+            <div className="pointer-events-none absolute inset-0" data-node-id="76:405">
+              <img alt="" className="absolute inset-0 block size-full max-w-none object-cover" src={imgRectangle4049} />
+            </div>
+            <div className="pointer-events-none absolute inset-x-3 bottom-3 top-[10%] flex items-end justify-end">
+              <div className="relative aspect-square h-[280px] w-[280px] max-h-full max-w-full shrink-0 sm:h-[300px] sm:w-[300px]">
+                <div
+                  className="mask-alpha mask-no-clip mask-no-repeat relative size-full"
+                  data-node-id="76:409"
+                  data-name="3d-wireframe-outline-polygon-sphere-globe-shape 1"
+                  style={{
+                    maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                    WebkitMaskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                    maskSize: "contain",
+                    maskPosition: "center",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskSize: "contain",
+                    WebkitMaskPosition: "center",
+                    WebkitMaskRepeat: "no-repeat",
+                  }}
+                >
+                  <img
+                    alt=""
+                    className="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-center"
+                    src={img3DWireframeOutlinePolygonSphereGlobeShape2}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[119px] not-italic text-[22px] text-white top-[74px] whitespace-nowrap" data-node-id="76:410">
+          <div className="absolute border-2 border-solid border-white h-[35px] left-[106px] top-[71px] w-[83px] z-[2]" data-node-id="76:406" />
+          <p className="absolute z-[3] font-['Satoshi:Medium',sans-serif] leading-[normal] left-[119px] not-italic text-[22px] text-white top-[74px] whitespace-nowrap" data-node-id="76:410">
             5020
           </p>
           <div className="absolute h-[16px] left-[370px] top-[465px] w-[15px]" data-node-id="76:411">
@@ -1121,7 +1134,7 @@ export default function FinaxisHome() {
           <div className="absolute h-[16px] left-[360px] top-[557px] w-[15px]" data-node-id="76:412">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse47} />
           </div>
-          <Component14 className="absolute bg-white content-stretch flex items-center justify-center left-[106px] px-[24px] py-[16px] rounded-[38px] top-[139px]" />
+          <Component14 className="absolute z-[3] bg-white content-stretch flex items-center justify-center left-[106px] px-[24px] py-[16px] rounded-[38px] top-[139px]" />
         </div>
       </div>
       <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Bold_Italic',sans-serif] italic justify-center leading-[0] left-[calc(50%-228px)] text-[#1e9500] text-[38px] top-[2854px] uppercase whitespace-nowrap" data-node-id="76:414">
@@ -1526,7 +1539,7 @@ export default function FinaxisHome() {
       <div className="-translate-x-1/2 absolute h-[220.847px] left-[calc(50%-530px)] top-[7043.39px] w-[394px]" data-node-id="76:626" data-name="YOU SELL">
         <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgYouSell} />
       </div>
-      <div className="absolute h-[622px] left-[-206px] top-[7628px] w-[1887.447px]" data-node-id="76:634">
+      <div className="absolute h-[560px] left-[-206px] top-[7628px] w-[1887.447px]" data-node-id="76:634">
         <div className="absolute contents left-0 top-0" data-node-id="76:635">
           <div className="absolute flex h-[261.358px] items-center justify-center left-[367.21px] top-[178.97px] w-[261.597px]">
             <div className="-scale-y-100 flex-none rotate-[-136.24deg]">
@@ -1549,7 +1562,7 @@ export default function FinaxisHome() {
             </div>
           </div>
         </div>
-        <div className="absolute content-stretch flex font-['Satoshi:Medium',sans-serif] gap-[45px] items-center leading-[normal] left-[444px] not-italic text-[22px] text-black top-[584px] whitespace-nowrap" data-node-id="76:640">
+        <div className="absolute content-stretch flex font-['Satoshi:Medium',sans-serif] gap-[45px] items-center leading-[normal] left-[444px] not-italic text-[22px] text-black top-[500px] whitespace-nowrap" data-node-id="76:640">
           <p className="relative shrink-0" data-node-id="76:641">
             POS Solutions
           </p>
@@ -1622,7 +1635,7 @@ export default function FinaxisHome() {
               </div>
             </div>
           </div>
-        <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Regular',sans-serif] justify-center leading-[0] left-[calc(50%+821.28px)] not-italic text-[#1e9501] text-[47px] top-[calc(50%+286.5px)] whitespace-nowrap" data-node-id="76:673">
+        <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Regular',sans-serif] justify-center leading-[0] left-[calc(50%+821.28px)] not-italic text-[#1e9501] text-[47px] top-[calc(50%+228px)] whitespace-nowrap" data-node-id="76:673">
           <p className="leading-[1.04]">2026</p>
         </div>
       </div>
@@ -1643,9 +1656,9 @@ export default function FinaxisHome() {
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgZed} />
         </div>
       </div>
-      {/* Figma frame: 1442×246 @ left 242, top 7930 — brand asset replaces live text */}
+      {/* Brand strip — tightened height vs Figma to reduce footer dead space */}
       <div
-        className="absolute left-[242px] top-[7930px] z-10 flex h-[246.23033142089844px] w-[1442px] rotate-0 items-center justify-center opacity-100"
+        className="absolute left-[242px] top-[7920px] z-10 flex h-[180px] w-[1442px] rotate-0 items-center justify-center opacity-100"
         data-node-id="76:646"
       >
         <img
