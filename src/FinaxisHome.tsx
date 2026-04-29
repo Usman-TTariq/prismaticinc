@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useContext, useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
+import { FinaxisDesktopScaleContext } from "./FinaxisDesktopScaleContext";
+import { submitPrismatechLead } from "./submitPrismatechLead";
 
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
 
@@ -65,109 +67,199 @@ const img03 = "https://www.figma.com/api/mcp/asset/f05e89e4-ebc3-4a6b-8a29-cd1c2
 const img04 = "https://www.figma.com/api/mcp/asset/8ab9c6ed-6760-49a3-933b-6193ecb27d4c";
 const imgGroup226 = "https://www.figma.com/api/mcp/asset/e0b873e2-3863-4f20-9053-ef79380ba87c";
 const imgYouSell = "https://www.figma.com/api/mcp/asset/eab0fb85-cc9a-4014-8426-4997c5a7b145";
-const imgGroup = "https://www.figma.com/api/mcp/asset/c426ec05-5584-49cb-990d-ce0f357e4eba";
-const imgIcOutlineFacebook = "https://www.figma.com/api/mcp/asset/5be24874-ea98-4720-a9c1-99c6b7212c79";
-const imgIcOutlineWhatsapp = "https://www.figma.com/api/mcp/asset/da4413b1-8f26-45af-8fb8-8d0a91c8687f";
-const imgDeviconTwitter = "https://www.figma.com/api/mcp/asset/f3e4c865-c276-427b-8545-e8e9dd045050";
 const imgSta = "https://www.figma.com/api/mcp/asset/45ed5644-0ba9-414b-8176-fbdf478aa517";
 const imgNda = "https://www.figma.com/api/mcp/asset/42bb8b87-5688-4af2-a225-89eb025f0b84";
 const imgRdi = "https://www.figma.com/api/mcp/asset/96efa59b-7cec-45ec-8d28-60a25141c8fd";
 const imgZed = "https://www.figma.com/api/mcp/asset/3b7f2c86-62b5-4458-bb7c-c22b1bc9fcea";
 
-type Component22Props = {
-  className?: string;
-};
-
-function Component22({ className }: Component22Props) {
-  return (
-    <div className={className || "bg-[#035c24] content-stretch flex h-[65px] items-center justify-center px-[24px] py-[16px] relative rounded-[38px] w-[227px]"} data-node-id="1:933">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:934">
-        Get Started Today
-      </p>
-    </div>
-  );
-}
-
 type Component19Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component19({ className }: Component19Props) {
+function Component19({ className, onClick }: Component19Props) {
+  const layout =
+    className || "bg-[#013a16] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:954">
+      Transaction-Based Models
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#013a16]`}
+        data-node-id="1:953"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#013a16] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:953">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:954">
-        Transaction-Based Models
-      </p>
+    <div className={layout} data-node-id="1:953">
+      {label}
     </div>
   );
 }
 
 type Component18Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component18({ className }: Component18Props) {
+function Component18({ className, onClick }: Component18Props) {
+  const layout =
+    className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:944">
+      Monthly POS Financing
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
+        data-node-id="1:943"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:943">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:944">
-        Monthly POS Financing
-      </p>
+    <div className={layout} data-node-id="1:943">
+      {label}
     </div>
   );
 }
 
 type Component17Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component17({ className }: Component17Props) {
+function Component17({ className, onClick }: Component17Props) {
+  const layout =
+    className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:939">
+      Start Your POS Setup
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
+        data-node-id="1:938"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:938">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:939">
-        Start Your POS Setup
-      </p>
+    <div className={layout} data-node-id="1:938">
+      {label}
     </div>
   );
 }
 
 type Component16Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component16({ className }: Component16Props) {
+function Component16({ className, onClick }: Component16Props) {
+  const layout =
+    className || "bg-[#00511e] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:969">
+      Learn More
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#00511e]`}
+        data-node-id="1:968"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#00511e] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:968">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:969">
-        Learn More
-      </p>
+    <div className={layout} data-node-id="1:968">
+      {label}
     </div>
   );
 }
 
 type Component15Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component15({ className }: Component15Props) {
+function Component15({ className, onClick }: Component15Props) {
+  const layout =
+    className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:959">
+      Get POS Financing
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
+        data-node-id="1:958"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:958">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:959">
-        Get POS Financing
-      </p>
+    <div className={layout} data-node-id="1:958">
+      {label}
     </div>
   );
 }
 
 type Component14Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component14({ className }: Component14Props) {
+function Component14({ className, onClick }: Component14Props) {
+  const layout =
+    className || "bg-white content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[#035c24] text-[22px] text-center whitespace-nowrap" data-node-id="1:964">
+      Learn More
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-white`}
+        data-node-id="1:963"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-white content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:963">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[#035c24] text-[22px] text-center whitespace-nowrap" data-node-id="1:964">
-        Learn More
-      </p>
+    <div className={layout} data-node-id="1:963">
+      {label}
     </div>
   );
 }
@@ -180,9 +272,12 @@ type Component13Props = {
 function Component13({ className, onClick }: Component13Props) {
   const layout =
     className ||
-    "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+    "bg-[#035c24] content-stretch flex min-h-[48px] items-center justify-center px-3 py-2.5 min-[1280px]:px-5 min-[1280px]:py-3.5 min-[1536px]:px-6 min-[1536px]:py-4 relative rounded-[38px]";
   const label = (
-    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:929">
+    <p
+      className="font-['Satoshi:Medium',sans-serif] max-w-[9.5rem] min-[1280px]:max-w-none leading-[1.1] not-italic relative shrink-0 text-center text-[13px] text-white min-[1280px]:text-[16px] min-[1536px]:text-[18px] min-[1700px]:text-[22px] sm:whitespace-nowrap"
+      data-node-id="1:929"
+    >
       Talk To An Expert
     </p>
   );
@@ -191,7 +286,7 @@ function Component13({ className, onClick }: Component13Props) {
       <button
         type="button"
         onClick={onClick}
-        className={`${layout} cursor-pointer border-0 outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
+        className={`${layout} max-w-[min(220px,42vw)] min-[1536px]:max-w-none cursor-pointer border-0 outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
         data-node-id="1:928"
       >
         {label}
@@ -215,6 +310,22 @@ export default function FinaxisHome() {
     phone: "",
     message: "",
   });
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
+  const [leadSubmitError, setLeadSubmitError] = useState<string | null>(null);
+
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
+  const [thankYouOpen, setThankYouOpen] = useState(false);
+
+  const finaxisDesktopScale = useContext(FinaxisDesktopScaleContext);
+  /** Viewport px: artboard nav height (134) × scale — drawer/backdrop sit below fixed portal navbar. */
+  const desktopNavViewportPx = 134 * finaxisDesktopScale;
 
   useEffect(() => {
     const id = window.setTimeout(() => {
@@ -227,21 +338,30 @@ export default function FinaxisHome() {
   const dismissLeadPopup = useCallback(() => {
     setLeadModalOpen(false);
     setLeadSubmitted(false);
+    setLeadSubmitError(null);
     setLeadForm({ name: "", email: "", phone: "", message: "" });
+  }, []);
+
+  const dismissThankYou = useCallback(() => {
+    setThankYouOpen(false);
+    setContactSubmitError(null);
+    setContactForm({ name: "", email: "", phone: "", message: "" });
   }, []);
 
   const openLeadPopup = useCallback(() => {
     setMenuOpen(false);
     setLeadSubmitted(false);
+    setLeadSubmitError(null);
     setLeadForm({ name: "", email: "", phone: "", message: "" });
     setLeadModalOpen(true);
   }, []);
 
   useEffect(() => {
-    const locked = menuOpen || leadModalOpen;
+    const locked = menuOpen || leadModalOpen || thankYouOpen;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      if (leadModalOpen) dismissLeadPopup();
+      if (thankYouOpen) dismissThankYou();
+      else if (leadModalOpen) dismissLeadPopup();
       else if (menuOpen) setMenuOpen(false);
     };
     if (!locked) return;
@@ -252,11 +372,33 @@ export default function FinaxisHome() {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [menuOpen, leadModalOpen, dismissLeadPopup]);
+  }, [menuOpen, leadModalOpen, thankYouOpen, dismissLeadPopup, dismissThankYou]);
 
-  const onLeadSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onLeadSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLeadSubmitted(true);
+    setLeadSubmitError(null);
+    setLeadSubmitting(true);
+    const result = await submitPrismatechLead({ ...leadForm, source: "popup" });
+    setLeadSubmitting(false);
+    if (result.ok) {
+      setLeadSubmitted(true);
+    } else {
+      setLeadSubmitError(result.ok === false ? result.error : "Something went wrong");
+    }
+  };
+
+  const onContactSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setContactSubmitError(null);
+    setContactSubmitting(true);
+    const result = await submitPrismatechLead({ ...contactForm, source: "contact_desktop" });
+    setContactSubmitting(false);
+    if (result.ok) {
+      setThankYouOpen(true);
+      setContactForm({ name: "", email: "", phone: "", message: "" });
+    } else {
+      setContactSubmitError(result.ok === false ? result.error : "Something went wrong");
+    }
   };
 
   return (
@@ -578,130 +720,169 @@ export default function FinaxisHome() {
       <div className="absolute h-[13px] left-[1575px] top-[822px] w-[133px]" data-node-id="76:345">
         <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup79} />
       </div>
-      <header className="absolute top-0 left-0 z-50 h-[134px] w-full overflow-hidden" data-node-id="76:351">
-        <nav
-          className="relative mx-auto h-[134px] w-full max-w-[1920px] border border-[#272727] border-solid bg-[#f7f7f7] shadow-[0_8px_28px_rgba(0,0,0,0.12)]"
-          data-node-id="76:352"
+      {createPortal(
+        <header
+          className="pointer-events-none border-0 bg-transparent p-0"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: "50%",
+            width: 1920,
+            height: 134,
+            zIndex: 280,
+            transform: `translateX(-50%) scale(${finaxisDesktopScale})`,
+            transformOrigin: "top center",
+          }}
+          data-node-id="76:351"
         >
-          <button
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="finaxis-nav-drawer"
-            onClick={() => setMenuOpen((o) => !o)}
-            className="absolute left-[59.5px] top-[52px] flex h-[30px] cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7]"
-            data-node-id="76:353"
-          >
-            <div className="relative h-[23px] w-7 shrink-0" data-node-id="76:354" data-name="Vector (Stroke)">
-              <img alt="" className="absolute inset-0 block size-full max-w-none" src={imgVectorStroke} />
-            </div>
-            <span
-              className="font-['Satoshi:Medium',sans-serif] text-[22px] font-medium leading-none not-italic tracking-[0.22px] text-black"
-              data-node-id="76:355"
+          <div className="pointer-events-auto h-full w-full">
+            <nav
+              className="relative mx-auto flex h-[134px] w-full max-w-[1920px] items-center justify-between gap-2 border border-[#272727] border-solid bg-[#f7f7f7]/95 px-4 shadow-[0_8px_28px_rgba(0,0,0,0.12)] backdrop-blur-md min-[1280px]:gap-4 min-[1280px]:px-8 min-[1536px]:px-12 min-[1700px]:px-14"
+              data-node-id="76:352"
             >
-              Menu
-            </span>
-          </button>
+              <button
+                type="button"
+                aria-expanded={menuOpen}
+                aria-controls="finaxis-nav-drawer"
+                onClick={() => setMenuOpen((o) => !o)}
+                className="flex h-[30px] shrink-0 cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7] min-[1280px]:gap-3"
+                data-node-id="76:353"
+              >
+                <div className="relative h-[20px] w-6 shrink-0 min-[1536px]:h-[23px] min-[1536px]:w-7" data-node-id="76:354" data-name="Vector (Stroke)">
+                  <img alt="" className="absolute inset-0 block size-full max-w-none" src={imgVectorStroke} />
+                </div>
+                <span
+                  className="font-['Satoshi:Medium',sans-serif] text-[15px] font-medium leading-none not-italic tracking-[0.22px] text-black min-[1280px]:text-[18px] min-[1536px]:text-[20px] min-[1700px]:text-[22px]"
+                  data-node-id="76:355"
+                >
+                  Menu
+                </span>
+              </button>
 
+              <a
+                href="#finaxis-top"
+                className="flex min-w-0 flex-1 cursor-pointer items-center justify-center gap-1.5 px-1 text-inherit no-underline outline-none min-[1280px]:gap-2.5 min-[1280px]:px-3 min-[1536px]:gap-3 focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7]"
+                data-node-id="76:362"
+              >
+                <div
+                  className="relative h-[36px] w-[46px] shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light min-[1280px]:h-[40px] min-[1280px]:w-[52px] min-[1536px]:h-[46px] min-[1536px]:w-[58px]"
+                  data-node-id="206:316"
+                  data-name="Gemini_Generated_Image_8fm19t8fm19t8fm1 3 1"
+                  style={{ maskImage: `url('${imgGroup12}')` }}
+                >
+                  <img
+                    alt=""
+                    className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                    src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+                  />
+                </div>
+                <div className="flex min-w-0 items-baseline justify-center gap-1 font-['Clash_Display',sans-serif] text-[clamp(1.25rem,calc(0.5rem+2.1vw),2.75rem)] font-medium leading-[0.95] not-italic text-black uppercase min-[1280px]:gap-2">
+                  <span className="truncate">Prismatech</span>
+                  <span className="shrink-0 text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
+                </div>
+              </a>
+
+              <Component13 onClick={openLeadPopup} />
+            </nav>
+          </div>
+        </header>,
+        document.body,
+      )}
+
+      {createPortal(
+        <>
           <div
-            className="absolute top-[39px] left-1/2 flex -translate-x-1/2 items-center gap-3 whitespace-nowrap"
-            data-node-id="76:362"
-          >
-            <div
-              className="relative h-[46px] w-[58px] shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
-              data-node-id="206:316"
-              data-name="Gemini_Generated_Image_8fm19t8fm19t8fm1 3 1"
-              style={{ maskImage: `url('${imgGroup12}')` }}
-            >
-              <img
-                alt=""
-                className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
-                src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
-              />
-            </div>
-            <div className="flex items-baseline gap-2 font-['Clash_Display',sans-serif] text-[44px] font-medium leading-none not-italic text-black uppercase">
-              <span>Prismatech</span>
-              <span className="text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
-            </div>
-          </div>
-
-          <Component13
-            onClick={openLeadPopup}
-            className="absolute top-[38px] right-[26.5px] flex h-[55px] w-[220px] items-center justify-center rounded-[38px] bg-[#035c24] px-6"
+            className={`fixed left-0 z-[260] bg-black/45 backdrop-blur-[2px] transition-opacity duration-300 ease-out ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+            style={{
+              top: desktopNavViewportPx,
+              right: 0,
+              height: `calc(100dvh - ${desktopNavViewportPx}px)`,
+            }}
+            aria-hidden={!menuOpen}
+            onClick={() => setMenuOpen(false)}
           />
-        </nav>
-      </header>
-
-      <div
-        className={`fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] transition-opacity duration-300 ease-out ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
-        aria-hidden={!menuOpen}
-        onClick={() => setMenuOpen(false)}
-      />
-      <aside
-        id="finaxis-nav-drawer"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site navigation"
-        aria-hidden={!menuOpen}
-        inert={menuOpen ? undefined : true}
-        className={`fixed top-0 left-0 z-[101] flex h-full max-h-svh w-[min(420px,92vw)] flex-col border-r border-[#272727] bg-[#f7f7f7] shadow-[8px_0_40px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none -translate-x-full"}`}
-      >
-        <div className="flex shrink-0 items-center justify-between border-b border-[#272727] px-5 py-4">
-          <div className="flex items-center gap-2.5">
-            <div
-              className="relative h-9 w-11 shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
-              style={{ maskImage: `url('${imgGroup12}')` }}
-            >
-              <img
-                alt=""
-                className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
-                src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
-              />
-            </div>
-            <div className="flex items-baseline gap-1.5 font-['Clash_Display',sans-serif] text-xl font-medium uppercase leading-none text-black">
-              <span>Prismatech</span>
-              <span className="text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setMenuOpen(false)}
-            className="flex size-10 items-center justify-center rounded-full border border-[#272727] bg-white text-xl leading-none text-[#035c24] transition-colors hover:bg-[#ececec] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
-            aria-label="Close menu"
+          <aside
+            id="finaxis-nav-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+            aria-hidden={!menuOpen}
+            inert={menuOpen ? undefined : true}
+            className={`fixed left-0 z-[270] flex w-[min(420px,92vw)] min-h-0 flex-col border-r border-[#272727] bg-[#f7f7f7] pb-[env(safe-area-inset-bottom,0px)] shadow-[8px_0_40px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none -translate-x-full"}`}
+            style={{
+              top: desktopNavViewportPx,
+              height: `calc(100dvh - ${desktopNavViewportPx}px)`,
+            }}
           >
-            ×
-          </button>
-        </div>
-        <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-4" aria-label="Page sections">
-          {(
-            [
-              ["#finaxis-top", "Home"],
-              ["#finaxis-hero", "POS & financing"],
-              ["#finaxis-notable", "Our notable work"],
-              ["#finaxis-how-it-works", "How it works"],
-              ["#finaxis-contact", "Contact"],
-            ] as const
-          ).map(([href, label]) => (
-            <a
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              className="rounded-lg border-l-[3px] border-transparent py-3.5 pr-3 pl-4 font-['Satoshi:Medium',sans-serif] text-[18px] font-medium tracking-[0.02em] text-black transition-colors hover:border-[#035c24] hover:bg-[#ececec]"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-        <div className="shrink-0 border-t border-[#272727] p-5">
-          <a
-            href="#finaxis-contact"
-            onClick={() => setMenuOpen(false)}
-            className="flex h-[52px] w-full items-center justify-center rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[18px] font-medium text-white transition-colors hover:bg-[#024a1d]"
-          >
-            Talk to an expert
-          </a>
-          <p className="mt-4 text-center font-['Satoshi:Regular',sans-serif] text-[13px] text-[#555]">Smart POS financing for growing businesses.</p>
-        </div>
-      </aside>
+            <div className="flex shrink-0 items-center justify-between border-b border-[#272727] px-5 py-4">
+              <a
+                href="#finaxis-top"
+                onClick={() => setMenuOpen(false)}
+                className="flex min-w-0 cursor-pointer items-center gap-2.5 text-inherit no-underline outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7]"
+              >
+                <div
+                  className="relative h-9 w-11 shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
+                  style={{ maskImage: `url('${imgGroup12}')` }}
+                >
+                  <img
+                    alt=""
+                    className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                    src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+                  />
+                </div>
+                <div className="flex min-w-0 items-baseline gap-1.5 font-['Clash_Display',sans-serif] text-xl font-medium uppercase leading-none text-black">
+                  <span>Prismatech</span>
+                  <span className="text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
+                </div>
+              </a>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="flex size-10 items-center justify-center rounded-full border border-[#272727] bg-white text-xl leading-none text-[#035c24] transition-colors hover:bg-[#ececec] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                aria-label="Close menu"
+              >
+                ×
+              </button>
+            </div>
+            <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto overscroll-contain px-3 py-4" aria-label="Page sections">
+              {(
+                [
+                  ["#finaxis-top", "Home"],
+                  ["#finaxis-hero", "POS & financing"],
+                  ["#finaxis-notable", "Our notable work"],
+                  ["#finaxis-how-it-works", "How it works"],
+                  ["#finaxis-contact", "Contact"],
+                ] as const
+              ).map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg border-l-[3px] border-transparent py-3.5 pr-3 pl-4 font-['Satoshi:Medium',sans-serif] text-[18px] font-medium tracking-[0.02em] text-black transition-colors hover:border-[#035c24] hover:bg-[#ececec]"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <div className="shrink-0 border-t border-[#272727] p-5">
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  openLeadPopup();
+                }}
+                className="flex h-[52px] w-full cursor-pointer items-center justify-center rounded-[38px] border-0 bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[18px] font-medium text-white transition-colors hover:bg-[#024a1d]"
+              >
+                Talk to an expert
+              </button>
+              <p className="mt-4 text-center font-['Satoshi:Regular',sans-serif] text-[13px] text-[#555]">
+                Smart POS financing for growing businesses.
+              </p>
+            </div>
+          </aside>
+        </>,
+        document.body,
+      )}
 
       {leadModalOpen && typeof document !== "undefined"
         ? createPortal(
@@ -861,14 +1042,22 @@ export default function FinaxisHome() {
                               placeholder="Tell us about your stores and current POS setup…"
                             />
                           </label>
+                          {leadSubmitError ? (
+                            <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 font-['Satoshi:Medium',sans-serif] text-[13px] text-red-800">
+                              {leadSubmitError}
+                            </p>
+                          ) : null}
                           <button
                             type="submit"
-                            className="mt-1 flex h-[50px] w-full items-center justify-center gap-2 rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[16px] font-medium text-white shadow-[0_4px_14px_rgba(3,92,36,0.35)] transition-[background-color,transform] hover:bg-[#024a1d] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                            disabled={leadSubmitting}
+                            className="mt-1 flex h-[50px] w-full items-center justify-center gap-2 rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[16px] font-medium text-white shadow-[0_4px_14px_rgba(3,92,36,0.35)] transition-[background-color,transform] hover:bg-[#024a1d] enabled:active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24] disabled:cursor-not-allowed disabled:opacity-60"
                           >
-                            Send message
-                            <span className="text-lg leading-none opacity-90" aria-hidden>
-                              →
-                            </span>
+                            {leadSubmitting ? "Sending…" : "Send message"}
+                            {!leadSubmitting ? (
+                              <span className="text-lg leading-none opacity-90" aria-hidden>
+                                →
+                              </span>
+                            ) : null}
                           </button>
                           <p className="text-center font-['Satoshi:Regular',sans-serif] text-[11px] leading-snug text-[#777]">
                             By submitting, you agree we may contact you about POS financing. No spam.
@@ -886,7 +1075,64 @@ export default function FinaxisHome() {
           )
         : null}
 
-      <div className="absolute h-[560px] left-0 top-[2201px] w-[1920px]" data-node-id="76:364">
+      {thankYouOpen && typeof document !== "undefined"
+        ? createPortal(
+            <>
+              <div
+                className="fixed inset-0 z-[9998] bg-black/55 backdrop-blur-sm"
+                onClick={dismissThankYou}
+                aria-hidden
+              />
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="finaxis-thanks-title"
+                className="fixed top-1/2 left-1/2 z-[9999] w-[min(calc(100vw-2rem),420px)] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-[#272727] bg-[#f7f7f7] p-6 shadow-xl"
+              >
+                <button
+                  type="button"
+                  className="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full border border-[#272727] bg-white text-lg text-[#035c24]"
+                  aria-label="Close"
+                  onClick={dismissThankYou}
+                >
+                  ×
+                </button>
+                <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full border-2 border-[#1e9500] bg-[rgba(30,149,0,0.08)]">
+                  <span className="font-['Satoshi:Bold',sans-serif] text-2xl text-[#035c24]" aria-hidden>
+                    ✓
+                  </span>
+                </div>
+                <p
+                  id="finaxis-thanks-title"
+                  className="text-center font-['Satoshi:Medium',sans-serif] text-[18px] font-medium text-black"
+                >
+                  Thank you!
+                </p>
+                <p className="mt-2 text-center font-['Satoshi:Regular',sans-serif] text-[15px] leading-relaxed text-[#444]">
+                  We&apos;ve received your message. Our team will reach out at{" "}
+                  <a href="mailto:info@prismatech.com" className="font-medium text-[#035c24] underline-offset-2 hover:underline">
+                    info@prismatech.com
+                  </a>{" "}
+                  soon.
+                </p>
+                <button
+                  type="button"
+                  onClick={dismissThankYou}
+                  className="mt-6 h-[48px] w-full rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[16px] font-medium text-white transition-colors hover:bg-[#024a1d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                >
+                  Close
+                </button>
+              </div>
+            </>,
+            document.body,
+          )
+        : null}
+
+      <div
+        id="finaxis-about"
+        className="absolute h-[560px] scroll-mt-[150px] left-0 top-[2201px] w-[1920px]"
+        data-node-id="76:364"
+      >
         <div className="absolute flex h-[560px] items-center justify-center left-0 top-0 w-[1920px]">
           <div className="-scale-y-100 flex-none rotate-180">
             <div className="bg-gradient-to-r from-[rgba(255,255,255,0.5)] h-[560px] to-[rgba(30,149,0,0.25)] w-[1920px]" data-node-id="76:365" />
@@ -928,7 +1174,11 @@ export default function FinaxisHome() {
           </div>
         </div>
       </div>
-      <div className="absolute h-[928px] left-0 top-[1274px] w-[1942px]" data-node-id="76:377">
+      <div
+        id="finaxis-why"
+        className="absolute h-[928px] scroll-mt-[150px] left-0 top-[1274px] w-[1942px]"
+        data-node-id="76:377"
+      >
         <div className="absolute h-[927px] left-0 top-px w-[1303px]" data-node-id="76:378">
           <div className="absolute bg-gradient-to-r from-[rgba(255,255,255,0.5)] h-[927px] left-0 to-[rgba(30,149,0,0.25)] top-0 w-[1303px]" data-node-id="76:379" />
           <div className="-translate-x-1/2 absolute h-[349px] left-[calc(50%-256.5px)] top-[108px] w-[328px]" data-node-id="76:380" data-name="Vector">
@@ -1134,7 +1384,10 @@ export default function FinaxisHome() {
           <div className="absolute h-[16px] left-[360px] top-[557px] w-[15px]" data-node-id="76:412">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse47} />
           </div>
-          <Component14 className="absolute z-[3] bg-white content-stretch flex items-center justify-center left-[106px] px-[24px] py-[16px] rounded-[38px] top-[139px]" />
+          <Component14
+            onClick={openLeadPopup}
+            className="absolute z-[3] bg-white content-stretch flex items-center justify-center left-[106px] px-[24px] py-[16px] rounded-[38px] top-[139px]"
+          />
         </div>
       </div>
       <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Bold_Italic',sans-serif] italic justify-center leading-[0] left-[calc(50%-228px)] text-[#1e9500] text-[38px] top-[2854px] uppercase whitespace-nowrap" data-node-id="76:414">
@@ -1144,9 +1397,16 @@ export default function FinaxisHome() {
         <div className="-translate-y-1/2 absolute flex flex-col font-['Satoshi:Medium',sans-serif] justify-center leading-[0] left-[calc(50%-207px)] not-italic text-[22px] text-black top-[60px] w-[385px]" data-node-id="76:416">
           <p className="leading-[normal]">We offer sufficient POS financing solutions, so you could streamline your business operations more effectively without the budget limitations.</p>
         </div>
-        <Component15 className="absolute bg-[#035c24] content-stretch flex items-center justify-center left-0 px-[24px] py-[16px] rounded-[38px] top-[147px]" />
+        <Component15
+          onClick={openLeadPopup}
+          className="absolute bg-[#035c24] content-stretch flex items-center justify-center left-0 px-[24px] py-[16px] rounded-[38px] top-[147px]"
+        />
       </div>
-      <div className="absolute h-[362.736px] left-[233px] top-[3185px] w-[713.643px]" data-node-id="76:418">
+      <div
+        id="finaxis-services"
+        className="absolute h-[362.736px] scroll-mt-[150px] left-[233px] top-[3185px] w-[713.643px]"
+        data-node-id="76:418"
+      >
         <div className="absolute h-[362.736px] left-0 top-0 w-[713.643px]" data-node-id="76:419">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup80} />
         </div>
@@ -1210,7 +1470,11 @@ export default function FinaxisHome() {
           <div className="absolute bg-white h-[73.333px] left-[641px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-4px_0px] mask-size-[50.464px_68px] top-[44px] w-[46.667px]" data-node-id="76:457" style={{ maskImage: `url('${imgRectangle4053}')` }} />
         </div>
       </div>
-      <div className="absolute h-[1088px] left-0 top-[4028px] w-[1920px]" data-node-id="76:458">
+      <div
+        id="finaxis-industries"
+        className="absolute h-[1088px] scroll-mt-[150px] left-0 top-[4028px] w-[1920px]"
+        data-node-id="76:458"
+      >
         <div className="-translate-x-1/2 absolute bg-white h-[1088px] left-1/2 top-0 w-[1920px]" data-node-id="76:459" />
         <div className="absolute h-[377px] left-[233px] top-[54px] w-[1449px]" data-node-id="76:460">
           <div className="absolute h-[283.791px] left-0 top-0 w-[1449px]" data-node-id="76:461">
@@ -1358,7 +1622,10 @@ export default function FinaxisHome() {
             </div>
           </div>
         </div>
-        <Component16 className="absolute bg-[#00511e] content-stretch flex items-center justify-center left-[233px] px-[24px] py-[16px] rounded-[38px] top-[1002px]" />
+        <Component16
+          onClick={openLeadPopup}
+          className="absolute bg-[#00511e] content-stretch flex items-center justify-center left-[233px] px-[24px] py-[16px] rounded-[38px] top-[1002px]"
+        />
       </div>
       <div
         id="finaxis-how-it-works"
@@ -1463,7 +1730,10 @@ export default function FinaxisHome() {
             </div>
           </div>
         </div>
-        <Component17 className="-translate-x-1/2 absolute bg-[#035c24] content-stretch flex items-center justify-center left-[calc(50%-0.5px)] px-[24px] py-[16px] rounded-[38px] top-[679px]" />
+        <Component17
+          onClick={openLeadPopup}
+          className="-translate-x-1/2 absolute bg-[#035c24] content-stretch flex items-center justify-center left-[calc(50%-0.5px)] px-[24px] py-[16px] rounded-[38px] top-[679px]"
+        />
       </div>
       <div className="absolute left-[953px] top-[6026px] h-[879px] w-[727px] overflow-hidden rounded-[20px]" data-node-id="76:595">
         <div className="absolute inset-0 bg-black" />
@@ -1504,38 +1774,91 @@ export default function FinaxisHome() {
               <img alt="" className="block max-w-none size-full" height="591" src={imgRectangle4079} width="716" />
             </div>
           </div>
-          <Component18 className="absolute bg-[#035c24] content-stretch flex items-center justify-center left-[28px] px-[24px] py-[16px] rounded-[38px] top-[785px]" />
-          <Component19 className="absolute bg-[#013a16] content-stretch flex items-center justify-center left-[322px] px-[24px] py-[16px] rounded-[38px] top-[785px]" />
+          <Component18
+            onClick={openLeadPopup}
+            className="absolute bg-[#035c24] content-stretch flex items-center justify-center left-[28px] px-[24px] py-[16px] rounded-[38px] top-[785px]"
+          />
+          <Component19
+            onClick={openLeadPopup}
+            className="absolute bg-[#013a16] content-stretch flex items-center justify-center left-[322px] px-[24px] py-[16px] rounded-[38px] top-[785px]"
+          />
         </div>
       </div>
       <div className="-translate-x-1/2 absolute bg-gradient-to-r from-white h-[695px] left-1/2 to-[436.2%] to-[rgba(19,95,0,0.5)] top-[6984px] w-[1920px]" data-node-id="76:612" />
-      <div
-        id="finaxis-contact"
-        className="absolute h-[147px] scroll-mt-[150px] left-[1171px] top-[7089.57px] w-[509px]"
-        data-node-id="76:613"
-      >
+      <div className="absolute h-[147px] left-[1171px] top-[7089.57px] w-[509px]" data-node-id="76:613">
         <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Bold_Italic',sans-serif] italic justify-center leading-[0] left-[calc(50%-455.5px)] text-[#1e9500] text-[38px] top-[102px] uppercase whitespace-nowrap" data-node-id="76:614">
           <p className="leading-[normal]">Contact us to get a better POS today!</p>
         </div>
         <p className="-translate-x-full absolute font-['Satoshi:Regular',sans-serif] leading-[1.27] left-[calc(50%+254.5px)] not-italic text-[22px] text-black text-right top-[0.43px] w-[469px]" data-node-id="76:615">{`We'd love to hear from you! Have questions, we’ve got all the answers!`}</p>
       </div>
-      <div className="absolute h-[283px] left-[232px] top-[7323px] w-[1415px]" data-node-id="76:616">
-        <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-0 rounded-[500px] top-0 w-[575px]" data-node-id="76:617" />
-        <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-0 rounded-[500px] top-[159px] w-[575px]" data-node-id="76:618" />
-        <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-[584px] rounded-[500px] top-0 w-[575px]" data-node-id="76:619" />
-        <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-[584px] rounded-[500px] top-[159px] w-[575px]" data-node-id="76:620" />
-        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[1.27] left-[calc(50%-667.5px)] not-italic text-[#929292] text-[22px] top-[48px] whitespace-nowrap" data-node-id="76:621">{`Full Name `}</p>
-        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[1.27] left-[calc(50%-76.5px)] not-italic text-[#929292] text-[22px] top-[48px] whitespace-nowrap" data-node-id="76:622">
-          Phone No
-        </p>
-        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[1.27] left-[calc(50%-667.5px)] not-italic text-[#929292] text-[22px] top-[207px] whitespace-nowrap" data-node-id="76:623">
-          E-mail
-        </p>
-        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[1.27] left-[calc(50%-76.5px)] not-italic text-[#929292] text-[22px] top-[207px] whitespace-nowrap" data-node-id="76:624">
-          Message
-        </p>
-        <Component22 className="absolute bg-[#035c24] content-stretch flex h-[65px] items-center justify-center left-[1188px] px-[24px] py-[16px] rounded-[38px] top-[104px] w-[227px]" />
-      </div>
+      <form
+        id="finaxis-contact"
+        onSubmit={onContactSubmit}
+        className="absolute h-[283px] scroll-mt-[150px] left-[232px] top-[7323px] w-[1415px]"
+        data-node-id="76:616"
+      >
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-0 rounded-[500px] top-0 w-[575px]" data-node-id="76:617" />
+          <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-0 rounded-[500px] top-[159px] w-[575px]" data-node-id="76:618" />
+          <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-[584px] rounded-[500px] top-0 w-[575px]" data-node-id="76:619" />
+          <div className="absolute bg-white border-[#3e3e3e] border-[0.5px] border-solid h-[124px] left-[584px] rounded-[500px] top-[159px] w-[575px]" data-node-id="76:620" />
+        </div>
+        <input
+          required
+          name="name"
+          value={contactForm.name}
+          onChange={(e) => setContactForm((f) => ({ ...f, name: e.target.value }))}
+          autoComplete="name"
+          placeholder="Full Name"
+          aria-label="Full name"
+          className="absolute left-0 top-0 z-[1] h-[124px] w-[575px] rounded-[500px] border-0 border-[#3e3e3e] bg-transparent pl-10 pr-6 font-['Satoshi:Medium',sans-serif] text-[22px] text-black outline-none placeholder:text-[#929292] focus-visible:ring-2 focus-visible:ring-[#035c24]/50"
+        />
+        <input
+          required
+          type="tel"
+          name="phone"
+          value={contactForm.phone}
+          onChange={(e) => setContactForm((f) => ({ ...f, phone: e.target.value }))}
+          autoComplete="tel"
+          placeholder="Phone No"
+          aria-label="Phone number"
+          className="absolute left-[584px] top-0 z-[1] h-[124px] w-[575px] rounded-[500px] border-0 border-[#3e3e3e] bg-transparent pl-10 pr-6 font-['Satoshi:Medium',sans-serif] text-[22px] text-black outline-none placeholder:text-[#929292] focus-visible:ring-2 focus-visible:ring-[#035c24]/50"
+        />
+        <input
+          required
+          type="email"
+          name="email"
+          value={contactForm.email}
+          onChange={(e) => setContactForm((f) => ({ ...f, email: e.target.value }))}
+          autoComplete="email"
+          placeholder="E-mail"
+          aria-label="Email"
+          className="absolute left-0 top-[159px] z-[1] h-[124px] w-[575px] rounded-[500px] border-0 border-[#3e3e3e] bg-transparent pl-10 pr-6 font-['Satoshi:Medium',sans-serif] text-[22px] text-black outline-none placeholder:text-[#929292] focus-visible:ring-2 focus-visible:ring-[#035c24]/50"
+        />
+        <input
+          required
+          name="message"
+          value={contactForm.message}
+          onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
+          autoComplete="off"
+          placeholder="Message"
+          aria-label="Message"
+          className="absolute left-[584px] top-[159px] z-[1] h-[124px] w-[575px] rounded-[500px] border-0 border-[#3e3e3e] bg-transparent pl-10 pr-6 font-['Satoshi:Medium',sans-serif] text-[22px] text-black outline-none placeholder:text-[#929292] focus-visible:ring-2 focus-visible:ring-[#035c24]/50"
+        />
+        {contactSubmitError ? (
+          <p className="absolute left-0 top-[268px] z-[2] max-w-[900px] rounded-md border border-red-200 bg-red-50 px-3 py-2 font-['Satoshi:Medium',sans-serif] text-[14px] text-red-800">
+            {contactSubmitError}
+          </p>
+        ) : null}
+        <button
+          type="submit"
+          disabled={contactSubmitting}
+          className="absolute top-[104px] left-[1188px] z-[1] flex h-[65px] w-[227px] items-center justify-center rounded-[38px] border-0 bg-[#035c24] px-[24px] py-[16px] font-['Satoshi:Medium',sans-serif] text-[22px] font-medium text-white outline-none transition-colors hover:bg-[#024a1d] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7] disabled:cursor-not-allowed disabled:opacity-60"
+          data-node-id="1:933"
+        >
+          {contactSubmitting ? "Sending…" : "Get Started Today"}
+        </button>
+      </form>
       <div className="-translate-x-1/2 absolute h-[220.847px] left-[calc(50%-530px)] top-[7043.39px] w-[394px]" data-node-id="76:626" data-name="YOU SELL">
         <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgYouSell} />
       </div>
@@ -1562,79 +1885,52 @@ export default function FinaxisHome() {
             </div>
           </div>
         </div>
-        <div className="absolute content-stretch flex font-['Satoshi:Medium',sans-serif] gap-[45px] items-center leading-[normal] left-[444px] not-italic text-[22px] text-black top-[500px] whitespace-nowrap" data-node-id="76:640">
-          <p className="relative shrink-0" data-node-id="76:641">
+        <nav
+          className="absolute content-stretch flex font-['Satoshi:Medium',sans-serif] gap-[45px] items-center leading-[normal] left-[444px] not-italic text-[22px] text-black top-[500px] whitespace-nowrap"
+          aria-label="Footer"
+          data-node-id="76:640"
+        >
+          <a
+            href="#finaxis-services"
+            className="relative shrink-0 text-black no-underline outline-none transition-colors hover:text-[#035c24] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ececec]"
+            data-node-id="76:641"
+          >
             POS Solutions
-          </p>
-          <p className="relative shrink-0" data-node-id="76:642">
+          </a>
+          <a
+            href="#finaxis-about"
+            className="relative shrink-0 text-black no-underline outline-none transition-colors hover:text-[#035c24] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ececec]"
+            data-node-id="76:642"
+          >
             About Us
-          </p>
-          <p className="relative shrink-0" data-node-id="76:643">
+          </a>
+          <a
+            href="#finaxis-industries"
+            className="relative shrink-0 text-black no-underline outline-none transition-colors hover:text-[#035c24] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ececec]"
+            data-node-id="76:643"
+          >
             Industries We Serve
-          </p>
-          <p className="relative shrink-0" data-node-id="76:644">
+          </a>
+          <a
+            href="#finaxis-how-it-works"
+            className="relative shrink-0 text-black no-underline outline-none transition-colors hover:text-[#035c24] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ececec]"
+            data-node-id="76:644"
+          >
             How It Works
-          </p>
-          <p className="relative shrink-0" data-node-id="76:645">
+          </a>
+          <a
+            href="#finaxis-contact"
+            className="relative shrink-0 text-black no-underline outline-none transition-colors hover:text-[#035c24] focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ececec]"
+            data-node-id="76:645"
+          >
             Contact Us
-          </p>
-        </div>
+          </a>
+        </nav>
         <div className="absolute left-[444px] top-[134px] h-[147px] w-[1443.447px]" data-node-id="76:648">
-            <div className="-translate-y-1/2 absolute capitalize flex flex-col font-normal font-['Clash Display',sans-serif] justify-center leading-[0] left-[calc(50%-721.72px)] not-italic text-[47px] text-black top-1/2 w-[232px]" data-node-id="76:649">
-              <p className="leading-[1.04]">POS Financing Transact</p>
-            </div>
-            <div className="absolute contents left-[1193px] top-[93px]" data-node-id="76:650">
-              <div className="absolute contents left-[1261.32px] top-[93px]" data-node-id="76:651">
-                <div className="absolute flex items-center justify-center left-[1261.32px] size-[45.391px] top-[93px]">
-                  <div className="-scale-y-100 flex-none">
-                    <div className="backdrop-blur-[12px] bg-black border-[1.5px] border-solid border-white rounded-[500px] size-[45.391px]" data-node-id="76:652" />
-                  </div>
-                </div>
-                <div className="absolute left-[1273.21px] overflow-clip size-[21.615px] top-[104.89px]" data-node-id="76:653" data-name="lets-icons:insta">
-                  <div className="absolute inset-[12.5%]" data-node-id="76:654" data-name="Group">
-                    <div className="absolute inset-[-6.17%]">
-                      <img alt="" className="block max-w-none size-full" src={imgGroup} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute contents left-[1193px] top-[93px]" data-node-id="76:658">
-                <div className="absolute flex items-center justify-center left-[1193px] size-[45.391px] top-[93px]">
-                  <div className="-scale-y-100 flex-none">
-                    <div className="backdrop-blur-[12px] bg-black border-[1.5px] border-solid border-white rounded-[500px] size-[45.391px]" data-node-id="76:659" />
-                  </div>
-                </div>
-                <div className="absolute left-[1204.89px] size-[21.615px] top-[104.89px]" data-node-id="76:660" data-name="ic:outline-facebook">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcOutlineFacebook} />
-                </div>
-              </div>
-              <div className="absolute contents left-[1330.06px] top-[93px]" data-node-id="76:662">
-                <div className="absolute contents left-[1330.06px] top-[93px]" data-node-id="76:663">
-                  <div className="absolute flex items-center justify-center left-[1330.06px] size-[45.391px] top-[93px]">
-                    <div className="-scale-y-100 flex-none">
-                      <div className="backdrop-blur-[12px] bg-black border-[1.5px] border-solid border-white rounded-[500px] size-[45.391px]" data-node-id="76:664" />
-                    </div>
-                  </div>
-                  <div className="absolute left-[1341.94px] size-[21.615px] top-[104.89px]" data-node-id="76:665" data-name="lets-icons:insta" />
-                </div>
-                <div className="absolute left-[1341.06px] size-[24px] top-[103px]" data-node-id="76:666" data-name="ic:outline-whatsapp">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcOutlineWhatsapp} />
-                </div>
-              </div>
-              <div className="absolute contents left-[1398.06px] top-[93px]" data-node-id="76:668">
-                <div className="absolute contents left-[1398.06px] top-[93px]" data-node-id="76:669">
-                  <div className="absolute flex items-center justify-center left-[1398.06px] size-[45.391px] top-[93px]">
-                    <div className="-scale-y-100 flex-none">
-                      <div className="backdrop-blur-[12px] bg-black border-[1.5px] border-solid border-white rounded-[500px] size-[45.391px]" data-node-id="76:670" />
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute left-[1413.06px] size-[16px] top-[107px]" data-node-id="76:671" data-name="devicon:twitter">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgDeviconTwitter} />
-                </div>
-              </div>
-            </div>
+          <div className="-translate-y-1/2 absolute capitalize flex flex-col font-normal font-['Clash Display',sans-serif] justify-center leading-[0] left-[calc(50%-721.72px)] not-italic text-[47px] text-black top-1/2 w-[232px]" data-node-id="76:649">
+            <p className="leading-[1.04]">POS Financing Transact</p>
           </div>
+        </div>
         <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Regular',sans-serif] justify-center leading-[0] left-[calc(50%+821.28px)] not-italic text-[#1e9501] text-[47px] top-[calc(50%+228px)] whitespace-nowrap" data-node-id="76:673">
           <p className="leading-[1.04]">2026</p>
         </div>
