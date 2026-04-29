@@ -3,7 +3,8 @@ import FinaxisHome from './FinaxisHome'
 
 export default function App() {
   return (
-    <div className="min-h-svh overflow-x-auto bg-neutral-950">
+    <div className="min-h-svh overflow-x-auto bg-[#f7f7f7]">
+      {/* Fixed 1920px Figma canvas; gutters match page bg on wide viewports. */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

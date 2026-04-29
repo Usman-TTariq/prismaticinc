@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* Procerus: files live in `public/Procerus/` → served from `/Procerus/` (Vite). */
+@font-face {
+  font-family: Procerus;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Procerus Regular"),
+    url("/Procerus/Procerus%20Regular.ttf") format("truetype");
+}
+
 /* Figma MCP mask helpers (Tailwind does not emit these by default) */
 @layer utilities {
   .mask-alpha {
@@ -60,6 +71,19 @@
   container-type: inline-size;
 }
 
+/* Figma 76:142 — Procerus headline size from Finaxis-Final */
+.finaxis-hero-procerus-figma {
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 352.2px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #00511e;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
 .finaxis-hero-serif-figma {
   -webkit-text-stroke: 0.45px rgb(255, 255, 255);
   paint-order: stroke fill;
@@ -69,6 +93,77 @@
     0.35px -0.35px 0 rgb(255, 255, 255),
     -0.35px 0.35px 0 rgb(255, 255, 255),
     0.35px 0.35px 0 rgb(255, 255, 255);
+}
+
+/*
+  Procerus display typography (Figma):
+  font-family: Procerus; weight 400; Regular; 239.17px; line-height 100%;
+  letter-spacing 1%; uppercase; vertical-align middle; leading-trim NONE
+*/
+.typography-procerus-display,
+.finaxis-card-display-headline {
+  /* Avoid “display” fallbacks that look like the real Procerus when the real font fails to load */
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 239.17px;
+  line-height: 100%;
+  letter-spacing: 0.01em; /* 1% (tracks with font-size when using modifiers) */
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Big gradient brand line: extra air between letters (Procerus is ultra-condensed) */
+.typography-procerus-display--spread {
+  letter-spacing: 0.12em;
+}
+
+/* Arc / small container (parent uses container-type: size + cqi) */
+.typography-procerus-display--arc {
+  font-size: clamp(10px, 22cqi, 239.17px);
+}
+
+/* “SERVING BUSINESSES” — Procerus from `public/Procerus/` */
+.finaxis-serving-businesses-type {
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 239.168px;
+  line-height: 0.82;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #00511e;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bottom-left “Our Notable Work” services — lighter weight, room to breathe */
+.finaxis-notable-work-services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 22px;
+  row-gap: 22px;
+  font-family: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: #5a5a5a;
+  margin: 0;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.finaxis-notable-work-sep {
+  font-weight: 400;
+  font-size: 0.72em;
+  line-height: 1;
+  color: #7a7a7a;
+  opacity: 0.95;
+  user-select: none;
 }
 
 html,

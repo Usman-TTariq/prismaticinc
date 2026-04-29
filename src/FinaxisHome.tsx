@@ -1,85 +1,78 @@
-import { motion } from 'framer-motion'
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 
-const imgElements361 = "https://www.figma.com/api/mcp/asset/210fc7af-81a6-4f69-ae03-a80dd4c6d0cc";
-const imgErere1 = "https://www.figma.com/api/mcp/asset/e973e3be-e48d-43f5-ac57-9f61c6cf8f0d";
-const imgGroup13 = "https://www.figma.com/api/mcp/asset/386d8c8a-c50b-4a62-a432-e97c76c89435";
-const imgVector35 = "https://www.figma.com/api/mcp/asset/6f1b29f4-f3a2-4c06-a473-2f4f9004d1ae";
-const imgEllipse36 = "https://www.figma.com/api/mcp/asset/5b78f5a2-76e9-41e4-aedd-4cfb5999254c";
-const imgEllipse37 = "https://www.figma.com/api/mcp/asset/d712a55d-d94d-41f2-a64b-285aab2803f0";
-const imgEllipse38 = "https://www.figma.com/api/mcp/asset/9daacccb-9b41-4618-94c3-0147ca1506b8";
-const imgEllipse44 = "https://www.figma.com/api/mcp/asset/5f0a95af-a92e-4a92-b638-8e7048e041fd";
-const imgEllipse45 = "https://www.figma.com/api/mcp/asset/84d23996-4eb7-4ab6-995f-c62bd0876562";
-const imgEllipse46 = "https://www.figma.com/api/mcp/asset/eb9cf534-f40e-4215-9da1-e297ca82323c";
-const img115831E41E2 = "https://www.figma.com/api/mcp/asset/877d7c0f-ae7f-4ff6-a5e0-93075cb7ba5d";
-const img3DWireframeOutlinePolygonSphereGlobeShape2 = "https://www.figma.com/api/mcp/asset/b7ac93c8-1709-4f85-af43-67456068f7f5";
-const imgRectangle4053 = "https://www.figma.com/api/mcp/asset/830512ac-1019-43b7-b69a-81ddda616a02";
-const imgRetailCardRow2021 = "https://www.figma.com/api/mcp/asset/75976ddf-2904-4b5b-bd50-eda49faaea7e";
-const imgGif121024X5621 = "https://www.figma.com/api/mcp/asset/c668731d-b570-44b6-a6e8-9a7b8ccea674";
-const imgRectangle1304 = "https://www.figma.com/api/mcp/asset/e0efa221-60f3-4146-8128-9ebd3b2449db";
-const imgRectangle4079 = "https://www.figma.com/api/mcp/asset/8231eaf7-0075-476d-9ce9-30d278ff9f54";
-const imgVector = "https://www.figma.com/api/mcp/asset/243e95fb-f8b7-40d7-9ac2-90a054539277";
-const imgLine1 = "https://www.figma.com/api/mcp/asset/8f40e641-0199-4c54-9a17-9f2d361b7825";
-const imgLine4 = "https://www.figma.com/api/mcp/asset/b74d9454-fdbc-4c9b-b368-2e550ff4d503";
-const imgLine7 = "https://www.figma.com/api/mcp/asset/38500ff2-a18c-43c4-9669-4778a5c622a7";
-const imgLine5 = "https://www.figma.com/api/mcp/asset/8c3fcac8-2b9a-4137-9b3c-6870e7274bf6";
-const imgLine2 = "https://www.figma.com/api/mcp/asset/4645f313-f3f0-4fa6-8c43-6c6dbe52a66a";
-const imgLine3 = "https://www.figma.com/api/mcp/asset/d2206d93-61b3-494d-8d0e-e4fcc384fb2e";
-const imgGroup9 = "https://www.figma.com/api/mcp/asset/60b8b6db-6f65-40b8-b8b7-74ac554fadbf";
-const imgGroup5 = "https://www.figma.com/api/mcp/asset/38e132c4-c06a-43b6-a7fc-a73e07d57449";
-const imgGroup4 = "https://www.figma.com/api/mcp/asset/b10515a9-0441-4286-abdb-2f298bc05a46";
-const imgGroup3 = "https://www.figma.com/api/mcp/asset/7b17db9b-0390-4dcb-846f-db65750553a7";
-const imgGroup2 = "https://www.figma.com/api/mcp/asset/01b72bed-e848-4663-8553-1ff3f06c2d99";
-const imgGroup1 = "https://www.figma.com/api/mcp/asset/5bcf5e45-9298-4ee6-a40a-7c380acdd3ad";
-const imgEllipse22 = "https://www.figma.com/api/mcp/asset/bac9ade6-ee56-4c63-a034-9d90860182f4";
-const imgGroup12 = "https://www.figma.com/api/mcp/asset/f416b0f2-8351-4858-8b10-a20261700f68";
-const imgVector34 = "https://www.figma.com/api/mcp/asset/afe1b759-4f7e-4ea5-8555-7147848497c1";
-const imgEllipse58 = "https://www.figma.com/api/mcp/asset/7ae944bb-e184-4c91-88e4-591f773578f3";
-const imgGroup41 = "https://www.figma.com/api/mcp/asset/7350640b-a61c-44cc-bace-edfc37ba794f";
-const imgGroup42 = "https://www.figma.com/api/mcp/asset/aa5ec8a7-c87b-4145-b480-32a2b97e887b";
-const imgGroup43 = "https://www.figma.com/api/mcp/asset/039cea08-b70a-42c2-86a6-225a37142fff";
-const imgGroup56 = "https://www.figma.com/api/mcp/asset/5261581d-bc76-409c-810e-063f7a63fe4c";
-const imgGroup63 = "https://www.figma.com/api/mcp/asset/6f746844-e2ca-474a-85a5-19c0824fba28";
-const imgGroup50 = "https://www.figma.com/api/mcp/asset/0cd2facc-65be-4f12-adec-150e8aa56804";
-const imgGroup57 = "https://www.figma.com/api/mcp/asset/47004711-a969-485d-810b-e8fe44981e1f";
-const imgGroup48 = "https://www.figma.com/api/mcp/asset/33ba3398-d877-4534-bbb1-2c07450df47f";
-const imgGroup47 = "https://www.figma.com/api/mcp/asset/0c6a087c-288b-446c-9e04-c31592d516c3";
-const imgGroup52 = "https://www.figma.com/api/mcp/asset/2c1c77e9-b18a-41de-b9f8-0f2bff95620a";
-const imgMingcuteArrowUpLine = "https://www.figma.com/api/mcp/asset/a694bac7-2057-4915-8d76-d95b3e3f9772";
-const imgGroup79 = "https://www.figma.com/api/mcp/asset/97d617cb-ec21-46c5-b81f-4b906ec4a122";
-const imgVectorStroke = "https://www.figma.com/api/mcp/asset/44fdd280-54e9-49f3-807f-162877c8f3bd";
-const imgVector1 = "https://www.figma.com/api/mcp/asset/28be515f-9a6e-494d-866f-f339ac3c93a8";
-const imgVector2 = "https://www.figma.com/api/mcp/asset/10931e90-fdbc-4bea-a5f1-286894cc22a5";
-const imgVector3 = "https://www.figma.com/api/mcp/asset/f7ccdc61-cd8a-46e3-b4fa-1e9d69d2a0c7";
-const imgVector4 = "https://www.figma.com/api/mcp/asset/1248c502-ec26-407e-98a0-8dc4c1875a22";
-const img115831E41E1 = "https://www.figma.com/api/mcp/asset/454cae18-4674-4a2b-912c-17cec8683cd2";
-const img = "https://www.figma.com/api/mcp/asset/21fab404-cf13-442f-8583-ee63764872a4";
-const imgLine8 = "https://www.figma.com/api/mcp/asset/735d0d1d-56c3-4788-97c0-914cd29aff94";
-const imgLine9 = "https://www.figma.com/api/mcp/asset/05cd7afb-7eac-4e2d-915a-a0019c029497";
-const imgRectangle4049 = "https://www.figma.com/api/mcp/asset/237cbd5f-1f8e-44e7-b574-b25566f1e091";
-const img3DWireframeOutlinePolygonSphereGlobeShape1 = "https://www.figma.com/api/mcp/asset/6da44f20-d53e-4745-b022-eb41aefff018";
-const imgEllipse47 = "https://www.figma.com/api/mcp/asset/29f68879-4e2b-41ff-b102-85b5f5f743c5";
-const imgGroup80 = "https://www.figma.com/api/mcp/asset/0d29a1e0-02f3-40c3-bcf5-e54d5d59a347";
-const imgGroup82 = "https://www.figma.com/api/mcp/asset/4c8c7b3e-f3d1-4f48-ac26-48dfe110d989";
-const imgGroup81 = "https://www.figma.com/api/mcp/asset/019bcc56-9b52-430a-bf22-df5e4e6dc855";
-const imgGroup83 = "https://www.figma.com/api/mcp/asset/649c1893-7a98-4f45-85e4-d33b2d2193e7";
-const imgVector5 = "https://www.figma.com/api/mcp/asset/42d6707a-5008-42a2-bdb0-c0b89d1981ad";
-const imgSvg = "https://www.figma.com/api/mcp/asset/f5a3a7ac-a000-4334-a6f6-a65cbdefa801";
-const imgSimpleTransparentFast = "https://www.figma.com/api/mcp/asset/a56ef419-c220-4249-a2d3-fd8beb49e991";
-const img01 = "https://www.figma.com/api/mcp/asset/cb0464c4-4c3f-4d1e-a0a4-a0da7ee59296";
-const imgVector6 = "https://www.figma.com/api/mcp/asset/2571e32e-97cc-47bc-b19e-8939267b6066";
-const img02 = "https://www.figma.com/api/mcp/asset/fb462f58-aa14-4aa7-ad37-97f3c4a1c6f2";
-const img03 = "https://www.figma.com/api/mcp/asset/95bc0e5e-912b-4a8b-8f61-2d7a94f6a139";
-const img04 = "https://www.figma.com/api/mcp/asset/9c4ea03b-6d27-4b99-9fd4-0b08f7e5029c";
-const imgGroup226 = "https://www.figma.com/api/mcp/asset/80c9dd70-645b-4358-af8b-c55b8d1b69bb";
-const imgYouSell = "https://www.figma.com/api/mcp/asset/81f4e468-3e48-4a52-9daf-6fc0343b175b";
-const imgGroup = "https://www.figma.com/api/mcp/asset/fc52b458-57c8-4704-9f22-9c73f0693d25";
-const imgIcOutlineFacebook = "https://www.figma.com/api/mcp/asset/e92f6cd7-e3da-45e4-9bc5-13eb23cf6f07";
-const imgIcOutlineWhatsapp = "https://www.figma.com/api/mcp/asset/f72b81b6-b86c-4e48-b864-e3bc229be8d7";
-const imgDeviconTwitter = "https://www.figma.com/api/mcp/asset/5049a649-8d95-4c98-8aba-4c5c44686b64";
-const imgSta = "https://www.figma.com/api/mcp/asset/41983acf-d272-450c-8d9e-a416dadfdd2d";
-const imgNda = "https://www.figma.com/api/mcp/asset/647889d9-d21f-4e7a-bf66-7fd113740ada";
-const imgRdi = "https://www.figma.com/api/mcp/asset/ef291015-b16e-4704-a024-321fb0011ff3";
-const imgZed = "https://www.figma.com/api/mcp/asset/52d8660c-f617-4a8c-bde4-e0047dd41fae";
+const FINAXIS_LEAD_POPUP_STORAGE_KEY = "finaxis-lead-popup-dismissed";
+const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
+
+const imgElements361 = "https://www.figma.com/api/mcp/asset/385fcfb8-6ac7-4d5f-b71e-f55a3a920ead";
+const imgErere1 = "https://www.figma.com/api/mcp/asset/072ef79f-e07b-4b6a-8862-e2dfbb107247";
+const imgGroup13 = "https://www.figma.com/api/mcp/asset/f8b5f0e6-2eed-425a-a319-1f5421cf22ad";
+const imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131 = "https://www.figma.com/api/mcp/asset/8a51ae0d-c82e-4d06-b307-01e33fef56e2";
+const imgEllipse36 = "https://www.figma.com/api/mcp/asset/f659f888-4ecf-44e4-ba73-e8cf2d16fa09";
+const imgEllipse37 = "https://www.figma.com/api/mcp/asset/254af5c5-0e2c-415b-9314-67c46595333f";
+const imgEllipse38 = "https://www.figma.com/api/mcp/asset/beb188ec-88cb-444d-a2f7-9649405c85d5";
+const imgEllipse44 = "https://www.figma.com/api/mcp/asset/0da27bd9-3139-4a96-9cd6-ede7a7200a1f";
+const imgEllipse45 = "https://www.figma.com/api/mcp/asset/15b66849-4557-4fa5-92ce-7bdaa0694463";
+const imgEllipse46 = "https://www.figma.com/api/mcp/asset/8c852e47-36cf-40f4-8863-9fcaa0dd42b2";
+const img115831E41E2 = "https://www.figma.com/api/mcp/asset/f9cc9212-7c62-4c5e-9974-1b61072f809f";
+const img3DWireframeOutlinePolygonSphereGlobeShape2 = "https://www.figma.com/api/mcp/asset/bc75401c-3ca0-465f-9d52-de8ab24ccbd1";
+const imgRectangle4053 = "https://www.figma.com/api/mcp/asset/50b5d56c-89bc-4518-ad80-c8fb28deb006";
+const imgRetailCardRow2021 = "https://www.figma.com/api/mcp/asset/5c58554f-7c6f-4c27-a4b3-760942aab287";
+const imgGif121024X5621 = "https://www.figma.com/api/mcp/asset/03562f45-bc92-4fea-aa2b-e97f29870edb";
+const imgRectangle1304 = "https://www.figma.com/api/mcp/asset/5ca09472-facc-468d-ba84-e2d5f631ce3c";
+const imgRectangle4079 = "https://www.figma.com/api/mcp/asset/a5ac3678-5f51-466f-ab55-cd915142834b";
+const imgVector = "https://www.figma.com/api/mcp/asset/b1ed7586-ba23-4ef7-bfdb-436c1f731cf5";
+const imgLine1 = "https://www.figma.com/api/mcp/asset/590d8391-58ec-408b-851d-9549b9b97474";
+const imgLine4 = "https://www.figma.com/api/mcp/asset/e059f469-534e-40c2-b77b-2712fce6256a";
+const imgLine7 = "https://www.figma.com/api/mcp/asset/96ca9469-8180-4b2a-a7af-763029cc7c1a";
+const imgLine5 = "https://www.figma.com/api/mcp/asset/b70e7f15-af0c-415a-8992-bbc99e3c1516";
+const imgLine2 = "https://www.figma.com/api/mcp/asset/0ba87bac-a4a9-4d27-b1ff-a96d9fc25ac3";
+const imgLine3 = "https://www.figma.com/api/mcp/asset/fc1169d5-ca38-4a3b-b0b3-d475f09be710";
+const imgGroup9 = "https://www.figma.com/api/mcp/asset/65127d6d-e0fd-425a-8ef2-5d017256cfb1";
+const imgGroup5 = "https://www.figma.com/api/mcp/asset/be8cc662-008a-4e13-8166-86dd835f25ce";
+const imgGroup4 = "https://www.figma.com/api/mcp/asset/00677321-fa12-47f8-865c-6e7b01800141";
+const imgGroup3 = "https://www.figma.com/api/mcp/asset/de303eb5-dbfb-4055-8906-40a922c948a7";
+const imgGroup2 = "https://www.figma.com/api/mcp/asset/c4833667-c64e-42f3-8d3d-f3174dd3c7b8";
+const imgGroup1 = "https://www.figma.com/api/mcp/asset/86abcdc8-6486-4b9b-b9b2-680376b0f1b6";
+const imgEllipse22 = "https://www.figma.com/api/mcp/asset/53a384e5-d029-47fa-b40d-d7bb149d9586";
+const imgGroup12 = "https://www.figma.com/api/mcp/asset/4d3b5054-66f3-4647-8108-19b328b828e3";
+const imgVector34 = "https://www.figma.com/api/mcp/asset/ff2e1a80-ace8-4130-a7c7-5c5e3efd259e";
+const imgEllipse58 = "https://www.figma.com/api/mcp/asset/a36236bf-902e-4612-a513-7b3a7e7df829";
+const imgMingcuteArrowUpLine = "https://www.figma.com/api/mcp/asset/8df136d6-4c2b-432b-8713-579d138984c6";
+const imgGroup79 = "https://www.figma.com/api/mcp/asset/c374f2a3-e7da-408a-a67d-a62d56f14f1d";
+const imgVectorStroke = "https://www.figma.com/api/mcp/asset/03385499-8f80-46da-a59c-f5177b8b5079";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/0d0d4c6d-644d-4016-9d4a-a48752ded6c5";
+const imgVector2 = "https://www.figma.com/api/mcp/asset/393cdb11-0159-4823-bb40-5fa27b06ef60";
+const imgVector3 = "https://www.figma.com/api/mcp/asset/e801969c-676e-4bd0-897d-8a5ff821844f";
+const imgVector4 = "https://www.figma.com/api/mcp/asset/ed65793a-95d0-42d6-8fbd-5a1d5e9216e1";
+const img115831E41E1 = "https://www.figma.com/api/mcp/asset/ba2979c5-a45f-43c6-8407-03637fe1061a";
+const img = "https://www.figma.com/api/mcp/asset/1508068d-0e9e-4de6-9245-2709064b5925";
+const imgLine8 = "https://www.figma.com/api/mcp/asset/d6fbc018-4618-47d9-b9d5-24065b5eccfc";
+const imgLine9 = "https://www.figma.com/api/mcp/asset/18dc5272-d474-4005-ad9a-0dac0dad2b89";
+const imgRectangle4049 = "https://www.figma.com/api/mcp/asset/79fd9ffa-9341-4043-b407-c0c3447917c2";
+const img3DWireframeOutlinePolygonSphereGlobeShape1 = "https://www.figma.com/api/mcp/asset/98e197b5-1190-45af-818c-902d11f18151";
+const imgEllipse47 = "https://www.figma.com/api/mcp/asset/429a8fae-ac3a-4c28-a8e4-4d280b827c72";
+const imgGroup80 = "https://www.figma.com/api/mcp/asset/68ff5d6f-9867-4264-a0fc-615323cdd9ad";
+const imgGroup82 = "https://www.figma.com/api/mcp/asset/bd5c128b-64da-47f9-aa64-e308911d3ba4";
+const imgGroup81 = "https://www.figma.com/api/mcp/asset/c2fcbc69-c2d1-41c9-a382-78176da4b039";
+const imgGroup83 = "https://www.figma.com/api/mcp/asset/7c6611ea-ede8-4b8e-af79-fb552bf143b0";
+const imgVector5 = "https://www.figma.com/api/mcp/asset/f3e1dcf5-3726-45c2-8a62-a7d7b165ad5a";
+const imgSvg = "https://www.figma.com/api/mcp/asset/26cf74df-8014-4764-b05b-33c3b3cc0564";
+const imgSimpleTransparentFast = "https://www.figma.com/api/mcp/asset/9d978a60-943e-4252-8af5-6c9199ba8105";
+const img01 = "https://www.figma.com/api/mcp/asset/f330da71-1895-4f61-8a4c-d9cba52775aa";
+const imgVector6 = "https://www.figma.com/api/mcp/asset/ce3f305a-de8b-47a4-a7d8-105f70948b37";
+const img02 = "https://www.figma.com/api/mcp/asset/8e0aae0c-adc0-41d9-8d72-2a93b3021245";
+const img03 = "https://www.figma.com/api/mcp/asset/f05e89e4-ebc3-4a6b-8a29-cd1c2eb974ba";
+const img04 = "https://www.figma.com/api/mcp/asset/8ab9c6ed-6760-49a3-933b-6193ecb27d4c";
+const imgGroup226 = "https://www.figma.com/api/mcp/asset/e0b873e2-3863-4f20-9053-ef79380ba87c";
+const imgYouSell = "https://www.figma.com/api/mcp/asset/eab0fb85-cc9a-4014-8426-4997c5a7b145";
+const imgGroup = "https://www.figma.com/api/mcp/asset/c426ec05-5584-49cb-990d-ce0f357e4eba";
+const imgIcOutlineFacebook = "https://www.figma.com/api/mcp/asset/5be24874-ea98-4720-a9c1-99c6b7212c79";
+const imgIcOutlineWhatsapp = "https://www.figma.com/api/mcp/asset/da4413b1-8f26-45af-8fb8-8d0a91c8687f";
+const imgDeviconTwitter = "https://www.figma.com/api/mcp/asset/f3e4c865-c276-427b-8545-e8e9dd045050";
+const imgSta = "https://www.figma.com/api/mcp/asset/45ed5644-0ba9-414b-8176-fbdf478aa517";
+const imgNda = "https://www.figma.com/api/mcp/asset/42bb8b87-5688-4af2-a225-89eb025f0b84";
+const imgRdi = "https://www.figma.com/api/mcp/asset/96efa59b-7cec-45ec-8d28-60a25141c8fd";
+const imgZed = "https://www.figma.com/api/mcp/asset/3b7f2c86-62b5-4458-bb7c-c22b1bc9fcea";
 
 type Component22Props = {
   className?: string;
@@ -181,21 +174,106 @@ function Component14({ className }: Component14Props) {
 
 type Component13Props = {
   className?: string;
+  onClick?: () => void;
 };
 
-function Component13({ className }: Component13Props) {
+function Component13({ className, onClick }: Component13Props) {
+  const layout =
+    className ||
+    "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]";
+  const label = (
+    <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:929">
+      Talk To An Expert
+    </p>
+  );
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${layout} cursor-pointer border-0 outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#035c24]`}
+        data-node-id="1:928"
+      >
+        {label}
+      </button>
+    );
+  }
   return (
-    <div className={className || "bg-[#035c24] content-stretch flex items-center justify-center px-[24px] py-[16px] relative rounded-[38px]"} data-node-id="1:928">
-      <p className="font-['Satoshi:Medium',sans-serif] leading-[1.04] not-italic relative shrink-0 text-[22px] text-center text-white whitespace-nowrap" data-node-id="1:929">
-        Talk To An Expert
-      </p>
+    <div className={layout} data-node-id="1:928">
+      {label}
     </div>
   );
 }
 
 export default function FinaxisHome() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [leadModalOpen, setLeadModalOpen] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadForm, setLeadForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  useEffect(() => {
+    let dismissed = false;
+    try {
+      dismissed = Boolean(localStorage.getItem(FINAXIS_LEAD_POPUP_STORAGE_KEY));
+    } catch {
+      /* private mode */
+    }
+    if (dismissed) return;
+    const id = window.setTimeout(() => {
+      setMenuOpen(false);
+      setLeadModalOpen(true);
+    }, FINAXIS_LEAD_POPUP_DELAY_MS);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  const dismissLeadPopup = useCallback(() => {
+    setLeadModalOpen(false);
+    setLeadSubmitted(false);
+    setLeadForm({ name: "", email: "", phone: "", message: "" });
+    try {
+      localStorage.setItem(FINAXIS_LEAD_POPUP_STORAGE_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const openLeadPopup = useCallback(() => {
+    setMenuOpen(false);
+    setLeadSubmitted(false);
+    setLeadForm({ name: "", email: "", phone: "", message: "" });
+    setLeadModalOpen(true);
+  }, []);
+
+  useEffect(() => {
+    const locked = menuOpen || leadModalOpen;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (leadModalOpen) dismissLeadPopup();
+      else if (menuOpen) setMenuOpen(false);
+    };
+    if (!locked) return;
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [menuOpen, leadModalOpen, dismissLeadPopup]);
+
+  const onLeadSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLeadSubmitted(true);
+  };
+
   return (
     <div
+      id="finaxis-top"
       className="relative min-h-[8350px] w-full bg-[#f7f7f7]"
       data-node-id="76:136"
       data-name="home"
@@ -218,30 +296,28 @@ export default function FinaxisHome() {
           <img alt="" className="block max-w-none size-full" src={imgLine7} />
         </div>
       </div>
-      <motion.div
-        className="finaxis-hero-headline-cq absolute top-[80px] left-[42px] z-[25] h-[444px] w-[1837px] overflow-hidden"
+      <div
+        className="pointer-events-none absolute left-[40px] top-[523px] z-[3] h-[751px] w-[1840px] border border-[#272727] border-solid"
+        aria-hidden="true"
+      />
+      <div
+        id="finaxis-hero"
+        className="absolute left-[42px] top-[80px] z-[25] h-[444px] w-[1837px] scroll-mt-[150px] overflow-hidden"
         data-node-id="76:141"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div
-          className="-translate-x-1/2 -translate-y-1/2 absolute top-[201px] left-1/2 flex max-h-[min(360px,42vw)] w-full max-w-[1820px] flex-col justify-center overflow-hidden text-center leading-[0] text-[#00511e]"
+          className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 top-[201px] flex flex-col justify-center text-center leading-none not-italic text-[#00511e] tracking-[3.522px] uppercase whitespace-nowrap"
           data-node-id="76:142"
         >
-          <div className="finaxis-hero-green-wrap">
-            <p className="finaxis-hero-display text-[#00511e] uppercase not-italic whitespace-nowrap">
-              POS SYSTEMS MADE ACCESSIBLE
-            </p>
-          </div>
+          <p className="finaxis-hero-procerus-figma m-0 leading-[normal]">POS SYSTEMS MADE ACCESSIBLE</p>
         </div>
         <p
-          className="finaxis-hero-serif-figma absolute top-[249px] left-[calc(50%-729.5px)] z-20 w-[1458px] text-center font-['Caladea',serif] text-[126px] font-bold capitalize italic leading-[normal] text-black"
+          className="absolute left-[calc(50%-729.5px)] top-[249px] z-20 w-[1458px] text-center font-['Caladea',serif] text-[126px] font-normal capitalize italic leading-[normal] text-black"
           data-node-id="76:143"
         >
           Through Smart Financing
         </p>
-      </motion.div>
+      </div>
       <div className="absolute flex h-[751px] items-center justify-center left-[533px] top-[523px] w-0">
         <div className="flex-none rotate-90">
           <div className="h-0 relative w-[751px]" data-node-id="76:145">
@@ -276,9 +352,33 @@ export default function FinaxisHome() {
       <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[1408px] not-italic text-[28px] text-black top-[954px] w-[466px]" data-node-id="76:150">
         A reliable partner for POS transactions.
       </p>
-      <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[40px] not-italic text-[28px] text-black top-[957px] whitespace-nowrap" data-node-id="76:151">
-        Our Notable Clients
+      <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[40px] not-italic text-[28px] text-black top-[957px] whitespace-nowrap z-[5]" data-node-id="76:151">
+        Our Notable Work
       </p>
+      <div
+        id="finaxis-notable"
+        className="absolute left-[40px] top-[1004px] z-[6] max-w-[560px] scroll-mt-[150px] pb-20 pr-6"
+      >
+        <div className="finaxis-notable-work-services font-['Satoshi:Medium',sans-serif]">
+          <span>Website Design</span>
+          <span className="finaxis-notable-work-sep" aria-hidden="true">
+            {"\u2732"}
+          </span>
+          <span>Branding</span>
+          <span className="finaxis-notable-work-sep" aria-hidden="true">
+            {"\u2732"}
+          </span>
+          <span>Strategy Consulting</span>
+          <span className="finaxis-notable-work-sep" aria-hidden="true">
+            {"\u2732"}
+          </span>
+          <span>Digital - Marketing</span>
+          <span className="finaxis-notable-work-sep" aria-hidden="true">
+            {"\u2732"}
+          </span>
+          <span>Analytics & Report</span>
+        </div>
+      </div>
       <p className="absolute font-['Satoshi:Bold',sans-serif] leading-[normal] left-[1408px] not-italic text-[26px] text-black top-[1169px] uppercase whitespace-nowrap" data-node-id="76:152">
         Marquez D Dragon
       </p>
@@ -313,23 +413,23 @@ export default function FinaxisHome() {
           EST
         </p>
         <div className="absolute bg-black border border-[#00511e] border-solid h-[32px] left-[116px] rounded-[50px] top-[792px] w-[84px]" data-node-id="76:186" />
-        <div className="absolute bg-white h-[23px] left-[124px] rounded-bl-[50px] rounded-tl-[50px] top-[797px] w-[34px]" data-node-id="76:187" />
-        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[132px] not-italic text-[18px] text-black top-[796px] whitespace-nowrap" data-node-id="76:188">
+        <div className="absolute bg-white h-[23px] left-[122px] rounded-bl-[50px] rounded-tl-[50px] top-[797px] w-[36px]" data-node-id="76:187" />
+        <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[131px] not-italic text-[18px] text-black top-[796px] whitespace-nowrap" data-node-id="76:188">
           20
         </p>
         <p className="absolute font-['Satoshi:Medium',sans-serif] leading-[normal] left-[167px] not-italic text-[18px] text-white top-[796px] whitespace-nowrap" data-node-id="76:189">
           25
         </p>
       </div>
-      <div className="absolute top-[402px] left-[451px] z-10 h-[826px] w-[1218px]" data-node-id="76:190">
-        <div className="absolute contents left-[32px] top-[96px]" data-node-id="76:191">
+      <div className="absolute top-[402px] left-[451px] h-[826px] w-[1218px]" data-node-id="76:190">
+        <div className="absolute contents left-[14.27px] top-[-32.73px]" data-node-id="76:191">
           <div className="-translate-x-1/2 absolute left-[calc(50%-100px)] size-[730px] top-[96px]" data-node-id="76:192">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse22} />
           </div>
-          <div className="animate-finaxis-float absolute top-[219px] left-[643px] h-[92px] w-[316px]" data-node-id="164:450" data-name="elements36 1">
+          <div className="absolute top-[219px] left-[643px] h-[92px] w-[316px]" data-node-id="164:450" data-name="elements36 1">
             <img alt="" className="pointer-events-none absolute inset-0 size-full max-w-none object-cover" src={imgElements361} />
           </div>
-          <div className="animate-finaxis-float-delayed absolute top-[377px] left-[32px] h-[110px] w-[258px] shadow-[-11px_22px_15.4px_0px_rgba(0,0,0,0.25)]" data-node-id="164:453" data-name="erere 1">
+          <div className="absolute top-[377px] left-[32px] h-[110px] w-[258px] shadow-[-11px_22px_15.4px_0px_rgba(0,0,0,0.25)]" data-node-id="164:453" data-name="erere 1">
             <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgErere1} />
           </div>
           <div className="absolute contents left-[144px] top-[96px]" data-node-id="76:193" data-name="Mask group">
@@ -342,68 +442,24 @@ export default function FinaxisHome() {
                   <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector34} />
                 </div>
               </div>
-              <div className="absolute h-[32.955px] left-[469.67px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-325.666px_-420.375px] mask-size-[730px_730px] mix-blend-hard-light top-[516.38px] w-[146.705px]" data-node-id="163:441" style={{ maskImage: `url('${imgGroup12}')` }}>
-                <img alt="" className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full" src={imgVector35} />
+              <div
+                className="absolute left-[515px] top-[508px] h-[46px] w-[58px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
+                data-node-id="206:316"
+                style={{ maskImage: `url('${imgGroup12}')` }}
+                data-name="Gemini_Generated_Image_8fm19t8fm19t8fm1 3 1"
+              >
+                <img
+                  alt=""
+                  className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                  src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+                />
               </div>
             </div>
           </div>
         </div>
-        <div className="absolute contents inset-[65.75%_30.16%_7.35%_54.11%]" data-node-id="76:197" data-name="Layer 2">
-          <div className="absolute contents inset-[65.75%_30.16%_7.35%_54.11%]" data-node-id="76:198" data-name="Layer 1">
-            <div className="absolute flex inset-[84.07%_40.64%_7.35%_54.11%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(65.4468cqw,75.692cqh)] rotate-[-37.95deg] w-[hypot(34.5532cqw,-24.308cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50px] text-white whitespace-nowrap" data-node-id="76:199">
-                  F
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[82.31%_38.99%_10.32%_56.52%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(80.5322cqw,85.0815cqh)] rotate-[-40.42deg] w-[hypot(19.4678cqw,-14.9185cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50px] text-center text-white whitespace-nowrap" data-node-id="76:200">
-                  I
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[78.82%_36.22%_12.24%_57.65%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(65.5624cqw,63.953cqh)] rotate-[-46.01deg] w-[hypot(34.4376cqw,-36.047cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50px] text-center text-white whitespace-nowrap" data-node-id="76:201">
-                  N
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[79.26%_36.26%_15.48%_59.44%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(100cqw,100cqh)] rotate-[-50.27deg] w-[hypot(1.22231cqw,-1.7693cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50.062px] text-white whitespace-nowrap" data-node-id="76:202">{` `}</p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[75.42%_33.99%_16.4%_59.85%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(73.3032cqw,59.2965cqh)] rotate-[-53.93deg] w-[hypot(26.6968cqw,-40.7035cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50.105px] text-center text-white whitespace-nowrap" data-node-id="76:203">
-                  A
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[71.86%_32.34%_20.57%_61.54%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(77.3942cqw,54.6283cqh)] rotate-[-59.33deg] w-[hypot(22.6058cqw,-45.3717cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[49.993px] text-center text-white whitespace-nowrap" data-node-id="76:204">
-                  X
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[69.96%_31.52%_25.02%_63.02%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(90.9228cqw,69.5726cqh)] rotate-[-64.46deg] w-[hypot(9.0772cqw,-30.4274cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[49.872px] text-center text-white whitespace-nowrap" data-node-id="76:205">
-                  I
-                </p>
-              </div>
-            </div>
-            <div className="absolute flex inset-[65.75%_30.16%_28.15%_63.78%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="flex-none h-[hypot(86.6392cqw,45.8842cqh)] rotate-[-70.12deg] w-[hypot(13.3608cqw,-54.1158cqh)]">
-                <p className="font-['Satoshi:Medium',sans-serif] leading-[normal] not-italic relative text-[50px] text-center text-white whitespace-nowrap" data-node-id="76:206">
-                  S
-                </p>
-              </div>
-            </div>
+        <div className="absolute top-[55px] left-[217px] h-[65px] w-[584px]" data-node-id="163:445" data-name="Group 1 2">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <img alt="" className="absolute top-0 left-[-0.14%] h-[1267.5%] w-[100.27%] max-w-none" src={imgGroup13} />
           </div>
         </div>
         <div className="absolute contents inset-[15.32%_68.93%_58.82%_16.39%]" data-node-id="76:208" style={{ containerType: "size" }} data-name="Layer 2">
@@ -494,38 +550,6 @@ export default function FinaxisHome() {
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEllipse58} />
         </div>
       </div>
-      <div className="absolute inset-[12.4%_88.48%_87.14%_2.08%]" data-node-id="76:221">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup41} />
-      </div>
-      <div className="absolute inset-[12.39%_78.8%_87.13%_16.46%]" data-node-id="76:223">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup42} />
-      </div>
-      <div className="absolute inset-[14.23%_73.53%_85.25%_20.09%]" data-node-id="76:230">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup43} />
-      </div>
-      <div className="absolute h-[33.992px] left-[252.26px] top-[1029px] w-[32.69px]" data-node-id="76:233">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup56} />
-      </div>
-      <div className="absolute h-[33.992px] left-[321.95px] top-[1182.53px] w-[32.69px]" data-node-id="76:243">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup63} />
-      </div>
-      <div className="absolute inset-[13.38%_73.46%_86.26%_19.7%]" data-node-id="76:253">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup50} />
-      </div>
-      <div className="absolute h-[30.739px] left-[317.71px] top-[1106.9px] w-[29.561px]" data-node-id="76:259">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup57} />
-      </div>
-      <div className="absolute contents inset-[14.27%_84.85%_85.28%_2.08%]" data-node-id="76:269">
-        <div className="absolute inset-[14.27%_84.85%_85.28%_4.49%]" data-node-id="76:270">
-          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup48} />
-        </div>
-        <div className="absolute inset-[14.28%_96.23%_85.29%_2.08%]" data-node-id="76:282">
-          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup47} />
-        </div>
-      </div>
-      <div className="absolute inset-[13.36%_85.07%_86.25%_2.08%]" data-node-id="76:317">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup52} />
-      </div>
       <div className="absolute left-[1416px] size-[106px] top-[575px]" data-node-id="76:329">
         <div className="absolute inset-[-2.83%]">
           <img alt="" className="block max-w-none size-full" height="112" src={imgEllipse36} width="112" />
@@ -546,7 +570,7 @@ export default function FinaxisHome() {
           <p className="leading-[29.25px]">Mark Henry</p>
         </div>
         <p className="-translate-x-1/2 absolute font-['Inter:Regular',sans-serif] font-normal leading-[19px] left-[1641.5px] text-[14px] top-[743px] w-[291px]" data-node-id="76:336">
-          Finexa helped us find high-performing campaigns in minutes. The platform makes marketing brands effortless.”
+          PrismaTech helped us find high-performing campaigns in minutes. The platform makes marketing brands effortless.”
         </p>
       </div>
       <div className="absolute flex items-center justify-center left-[1850px] size-[24px] top-[744px]">
@@ -566,48 +590,311 @@ export default function FinaxisHome() {
       <div className="absolute h-[13px] left-[1575px] top-[822px] w-[133px]" data-node-id="76:345">
         <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup79} />
       </div>
-      <div className="absolute top-0 left-0 z-50 h-[134px] w-[1920px] overflow-hidden" data-node-id="76:351">
-        <div
-          className="absolute top-0 left-0 isolate h-[134px] w-[1920px] border-b border-black/[0.06] bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
+      <header className="absolute top-0 left-0 z-50 h-[134px] w-full overflow-hidden" data-node-id="76:351">
+        <nav
+          className="relative mx-auto h-[134px] w-full max-w-[1920px] border border-[#272727] border-solid bg-[#f7f7f7] shadow-[0_8px_28px_rgba(0,0,0,0.12)]"
           data-node-id="76:352"
-        />
-        <div className="absolute h-[30px] left-[59.5px] top-[52px] w-[102.5px]" data-node-id="76:353">
-          <div className="absolute inset-[11.67%_72.68%_11.67%_0]" data-node-id="76:354" data-name="Vector (Stroke)">
-            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVectorStroke} />
+        >
+          <button
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="finaxis-nav-drawer"
+            onClick={() => setMenuOpen((o) => !o)}
+            className="absolute left-[59.5px] top-[52px] flex h-[30px] cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#035c24] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f7f7]"
+            data-node-id="76:353"
+          >
+            <div className="relative h-[23px] w-7 shrink-0" data-node-id="76:354" data-name="Vector (Stroke)">
+              <img alt="" className="absolute inset-0 block size-full max-w-none" src={imgVectorStroke} />
+            </div>
+            <span
+              className="font-['Satoshi:Medium',sans-serif] text-[22px] font-medium leading-none not-italic tracking-[0.22px] text-black"
+              data-node-id="76:355"
+            >
+              Menu
+            </span>
+          </button>
+
+          <div
+            className="absolute top-[39px] left-1/2 flex -translate-x-1/2 items-center gap-3 whitespace-nowrap"
+            data-node-id="76:362"
+          >
+            <div
+              className="relative h-[46px] w-[58px] shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
+              data-node-id="206:316"
+              data-name="Gemini_Generated_Image_8fm19t8fm19t8fm1 3 1"
+              style={{ maskImage: `url('${imgGroup12}')` }}
+            >
+              <img
+                alt=""
+                className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+              />
+            </div>
+            <div className="flex items-baseline gap-2 font-['Clash_Display',sans-serif] text-[44px] font-medium leading-none not-italic text-black uppercase">
+              <span>Prismatech</span>
+              <span className="text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
+            </div>
           </div>
-          <div className="-translate-x-1/2 -translate-y-1/2 absolute flex flex-col font-['Satoshi:Bold',sans-serif] justify-center leading-[0] left-[73px] not-italic text-[22px] text-black text-center top-[15px] tracking-[0.22px] whitespace-nowrap" data-node-id="76:355">
-            <p className="leading-[normal]">Menu</p>
+
+          <Component13
+            onClick={openLeadPopup}
+            className="absolute top-[38px] right-[26.5px] flex h-[55px] w-[220px] items-center justify-center rounded-[38px] bg-[#035c24] px-6"
+          />
+        </nav>
+      </header>
+
+      <div
+        className={`fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] transition-opacity duration-300 ease-out ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+        aria-hidden={!menuOpen}
+        onClick={() => setMenuOpen(false)}
+      />
+      <aside
+        id="finaxis-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        aria-hidden={!menuOpen}
+        inert={menuOpen ? undefined : true}
+        className={`fixed top-0 left-0 z-[101] flex h-full max-h-svh w-[min(420px,92vw)] flex-col border-r border-[#272727] bg-[#f7f7f7] shadow-[8px_0_40px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none -translate-x-full"}`}
+      >
+        <div className="flex shrink-0 items-center justify-between border-b border-[#272727] px-5 py-4">
+          <div className="flex items-center gap-2.5">
+            <div
+              className="relative h-9 w-11 shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
+              style={{ maskImage: `url('${imgGroup12}')` }}
+            >
+              <img
+                alt=""
+                className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+              />
+            </div>
+            <div className="flex items-baseline gap-1.5 font-['Clash_Display',sans-serif] text-xl font-medium uppercase leading-none text-black">
+              <span>Prismatech</span>
+              <span className="text-[0.62em] font-medium tracking-[0.02em]">Inc</span>
+            </div>
           </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            className="flex size-10 items-center justify-center rounded-full border border-[#272727] bg-white text-xl leading-none text-[#035c24] transition-colors hover:bg-[#ececec] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+            aria-label="Close menu"
+          >
+            ×
+          </button>
         </div>
-        <div className="-translate-x-1/2 absolute contents left-[calc(50%-0.3px)] top-[39px]" data-node-id="76:356">
-          <div className="absolute contents left-[856px] top-[43px]" data-node-id="76:357">
-            <div className="absolute flex h-[19.703px] items-center justify-center left-[856px] top-[56.49px] w-[19.721px]">
-              <div className="flex-none rotate-[-43.76deg]">
-                <div className="bg-[#1e9500] h-[13.647px] w-[14.237px]" data-node-id="76:358" />
-              </div>
-            </div>
-            <div className="absolute flex h-[19.703px] items-center justify-center left-[869.84px] top-[70.1px] w-[19.721px]">
-              <div className="flex-none rotate-[-43.76deg]">
-                <div className="bg-[#212121] h-[13.647px] w-[14.237px]" data-node-id="76:359" />
-              </div>
-            </div>
-            <div className="absolute flex h-[19.703px] items-center justify-center left-[869.84px] top-[43px] w-[19.721px]">
-              <div className="flex-none rotate-[-43.76deg]">
-                <div className="bg-[#212121] h-[13.647px] w-[14.237px]" data-node-id="76:360" />
-              </div>
-            </div>
-            <div className="absolute flex h-[19.703px] items-center justify-center left-[883.68px] top-[56.61px] w-[19.721px]">
-              <div className="flex-none rotate-[-43.76deg]">
-                <div className="bg-[#212121] h-[13.647px] w-[14.237px]" data-node-id="76:361" />
+        <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-4" aria-label="Page sections">
+          {(
+            [
+              ["#finaxis-top", "Home"],
+              ["#finaxis-hero", "POS & financing"],
+              ["#finaxis-notable", "Our notable work"],
+              ["#finaxis-how-it-works", "How it works"],
+              ["#finaxis-contact", "Contact"],
+            ] as const
+          ).map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className="rounded-lg border-l-[3px] border-transparent py-3.5 pr-3 pl-4 font-['Satoshi:Medium',sans-serif] text-[18px] font-medium tracking-[0.02em] text-black transition-colors hover:border-[#035c24] hover:bg-[#ececec]"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <div className="shrink-0 border-t border-[#272727] p-5">
+          <a
+            href="#finaxis-contact"
+            onClick={() => setMenuOpen(false)}
+            className="flex h-[52px] w-full items-center justify-center rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[18px] font-medium text-white transition-colors hover:bg-[#024a1d]"
+          >
+            Talk to an expert
+          </a>
+          <p className="mt-4 text-center font-['Satoshi:Regular',sans-serif] text-[13px] text-[#555]">Smart POS financing for growing businesses.</p>
+        </div>
+      </aside>
+
+      {leadModalOpen ? (
+        <>
+          <div
+            className="fixed inset-0 z-[120] bg-black/55 backdrop-blur-[3px] transition-opacity"
+            aria-hidden
+            onClick={dismissLeadPopup}
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="finaxis-lead-title"
+            className="fixed top-1/2 left-1/2 z-[121] w-[calc(100%-1.5rem)] max-w-[min(92vw,720px)] -translate-x-1/2 -translate-y-1/2 rounded-[22px] border border-[#272727] border-solid bg-[#ebebeb] p-2 shadow-[0_24px_64px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.4)_inset] sm:p-2.5"
+          >
+            <div className="relative max-h-[min(88vh,720px)] overflow-hidden rounded-[16px] border border-[#1e9500] border-solid bg-gradient-to-br from-white via-[#f9fdf9] to-[rgba(30,149,0,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
+              <button
+                type="button"
+                onClick={dismissLeadPopup}
+                className="absolute top-3 right-3 z-20 flex size-10 items-center justify-center rounded-full border border-[#272727] bg-[#f7f7f7] text-xl leading-none text-[#035c24] shadow-sm transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                aria-label="Close"
+              >
+                ×
+              </button>
+
+              <div className="max-h-[min(88vh,720px)] overflow-y-auto overscroll-contain">
+                <div className="grid gap-0 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] sm:gap-0">
+                  <div className="relative min-h-[140px] overflow-hidden rounded-t-[14px] sm:min-h-[280px] sm:rounded-bl-[14px] sm:rounded-tl-[14px]">
+                    <img
+                      alt=""
+                      src={img115831E41E2}
+                      className="absolute inset-0 size-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+                    <div className="relative flex h-full min-h-[140px] flex-col justify-end p-4 pb-5 sm:min-h-[280px] sm:p-5 sm:pr-8">
+                      <div className="mb-3 flex items-center gap-2.5">
+                        <div
+                          className="relative h-10 w-[46px] shrink-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-371px_-412px] mask-size-[730px_730px] mix-blend-hard-light"
+                          style={{ maskImage: `url('${imgGroup12}')` }}
+                        >
+                          <img
+                            alt=""
+                            className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                            src={imgGeminiGeneratedImage8Fm19T8Fm19T8Fm131}
+                          />
+                        </div>
+                        <div className="flex items-baseline gap-1 font-['Clash_Display',sans-serif] text-lg font-medium uppercase leading-none text-white drop-shadow-sm">
+                          <span>Prismatech</span>
+                          <span className="text-[0.62em] opacity-95">Inc</span>
+                        </div>
+                      </div>
+                      <p className="font-['Clash_Display',sans-serif] text-[22px] font-medium leading-tight tracking-tight text-white drop-shadow-md sm:text-[26px]">
+                        Smart financing for your POS.
+                      </p>
+                      <p className="mt-2 max-w-[280px] font-['Satoshi:Medium',sans-serif] text-[13px] font-medium leading-snug text-white/90 sm:text-[14px]">
+                        Same-day follow-ups · Transparent terms · Built for scaling merchants
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col border-t border-[#272727]/25 bg-[#f7f7f7]/95 p-4 sm:border-t-0 sm:border-l sm:border-[#272727]/20 sm:p-5 sm:pl-5">
+                    <div className="mb-4 flex items-start justify-between gap-2 pr-10 sm:pr-2">
+                      <div>
+                        <p
+                          id="finaxis-lead-title"
+                          className="font-['Clash_Display',sans-serif] text-[22px] font-medium leading-tight tracking-tight text-black sm:text-[24px]"
+                        >
+                          Request a callback
+                        </p>
+                        <p className="mt-1 font-['Satoshi:Medium',sans-serif] text-[14px] font-medium text-[#1e9500]">
+                          We&apos;ll reach out within one business day.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[14px] border border-[#272727]/35 bg-white p-4 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:p-4">
+                      {leadSubmitted ? (
+                        <div className="py-6 text-center">
+                          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full border-2 border-[#1e9500] bg-[rgba(30,149,0,0.08)]">
+                            <span className="font-['Satoshi:Bold',sans-serif] text-2xl text-[#035c24]" aria-hidden>
+                              ✓
+                            </span>
+                          </div>
+                          <p className="font-['Satoshi:Medium',sans-serif] text-[17px] font-medium text-black">
+                            Thank you — we&apos;ve received your message.
+                          </p>
+                          <p className="mt-2 font-['Satoshi:Regular',sans-serif] text-[14px] text-[#555]">
+                            Our team will reach out shortly.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={dismissLeadPopup}
+                            className="mt-6 h-[48px] w-full rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[16px] font-medium text-white transition-colors hover:bg-[#024a1d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      ) : (
+                        <form onSubmit={onLeadSubmit} className="flex flex-col gap-3">
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            <label className="block sm:col-span-2">
+                              <span className="mb-1 block font-['Satoshi:Medium',sans-serif] text-[11px] font-medium uppercase tracking-[0.12em] text-[#555]">
+                                Full name
+                              </span>
+                              <input
+                                required
+                                name="name"
+                                value={leadForm.name}
+                                onChange={(e) => setLeadForm((f) => ({ ...f, name: e.target.value }))}
+                                autoComplete="name"
+                                className="h-11 w-full rounded-full border border-[#3e3e3e] bg-[#fafafa] px-4 font-['Satoshi:Medium',sans-serif] text-[15px] text-black outline-none transition-[box-shadow,background-color] placeholder:text-[#929292] focus:bg-white focus-visible:ring-2 focus-visible:ring-[#035c24]"
+                                placeholder="Jane Merchant"
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="mb-1 block font-['Satoshi:Medium',sans-serif] text-[11px] font-medium uppercase tracking-[0.12em] text-[#555]">
+                                Email
+                              </span>
+                              <input
+                                required
+                                type="email"
+                                name="email"
+                                value={leadForm.email}
+                                onChange={(e) => setLeadForm((f) => ({ ...f, email: e.target.value }))}
+                                autoComplete="email"
+                                className="h-11 w-full rounded-full border border-[#3e3e3e] bg-[#fafafa] px-4 font-['Satoshi:Medium',sans-serif] text-[15px] text-black outline-none transition-[box-shadow,background-color] placeholder:text-[#929292] focus:bg-white focus-visible:ring-2 focus-visible:ring-[#035c24]"
+                                placeholder="you@business.com"
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="mb-1 block font-['Satoshi:Medium',sans-serif] text-[11px] font-medium uppercase tracking-[0.12em] text-[#555]">
+                                Phone
+                              </span>
+                              <input
+                                required
+                                type="tel"
+                                name="phone"
+                                value={leadForm.phone}
+                                onChange={(e) => setLeadForm((f) => ({ ...f, phone: e.target.value }))}
+                                autoComplete="tel"
+                                className="h-11 w-full rounded-full border border-[#3e3e3e] bg-[#fafafa] px-4 font-['Satoshi:Medium',sans-serif] text-[15px] text-black outline-none transition-[box-shadow,background-color] placeholder:text-[#929292] focus:bg-white focus-visible:ring-2 focus-visible:ring-[#035c24]"
+                                placeholder="+1 (555) 000-0000"
+                              />
+                            </label>
+                          </div>
+                          <label className="block">
+                            <span className="mb-1 block font-['Satoshi:Medium',sans-serif] text-[11px] font-medium uppercase tracking-[0.12em] text-[#555]">
+                              How can we help?
+                            </span>
+                            <textarea
+                              required
+                              name="message"
+                              rows={3}
+                              value={leadForm.message}
+                              onChange={(e) => setLeadForm((f) => ({ ...f, message: e.target.value }))}
+                              className="w-full resize-y rounded-[14px] border border-[#3e3e3e] bg-[#fafafa] px-3.5 py-2.5 font-['Satoshi:Medium',sans-serif] text-[15px] text-black outline-none transition-[box-shadow,background-color] placeholder:text-[#929292] focus:bg-white focus-visible:ring-2 focus-visible:ring-[#035c24]"
+                              placeholder="Tell us about your stores and current POS setup…"
+                            />
+                          </label>
+                          <button
+                            type="submit"
+                            className="mt-1 flex h-[50px] w-full items-center justify-center gap-2 rounded-[38px] bg-[#035c24] font-['Satoshi:Medium',sans-serif] text-[16px] font-medium text-white shadow-[0_4px_14px_rgba(3,92,36,0.35)] transition-[background-color,transform] hover:bg-[#024a1d] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#035c24]"
+                          >
+                            Send message
+                            <span className="text-lg leading-none opacity-90" aria-hidden>
+                              →
+                            </span>
+                          </button>
+                          <p className="text-center font-['Satoshi:Regular',sans-serif] text-[11px] leading-snug text-[#777]">
+                            By submitting, you agree we may contact you about POS financing. No spam.
+                          </p>
+                        </form>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <p className="absolute font-medium font-['Clash Display',sans-serif] leading-[normal] left-[calc(50%-44.6px)] not-italic text-[44px] text-black top-[39px] whitespace-nowrap" data-node-id="76:362">
-            Finaxis
-          </p>
-        </div>
-        <Component13 className="-translate-x-1/2 absolute bg-[#035c24] content-stretch flex items-center justify-center left-[calc(50%+823.5px)] px-[24px] py-[16px] rounded-[38px] top-[38px]" />
-      </div>
+        </>
+      ) : null}
+
       <div className="absolute h-[560px] left-0 top-[2201px] w-[1920px]" data-node-id="76:364">
         <div className="absolute flex h-[560px] items-center justify-center left-0 top-0 w-[1920px]">
           <div className="-scale-y-100 flex-none rotate-180">
@@ -915,8 +1202,11 @@ export default function FinaxisHome() {
         <div className="absolute h-[377px] left-[233px] top-[54px] w-[1449px]" data-node-id="76:460">
           <div className="absolute h-[283.791px] left-0 top-0 w-[1449px]" data-node-id="76:461">
             <div className="absolute h-[283.791px] left-0 top-0 w-[876px] whitespace-nowrap" data-node-id="76:462">
-              <div className="-translate-x-1/2 -translate-y-1/2 absolute flex flex-col font-['Oswald',sans-serif] justify-center leading-[0] left-[calc(50%-45.5px)] not-italic text-[#00511e] text-[239.168px] text-center top-[136.5px] tracking-[2.3917px] uppercase" data-node-id="76:463">
-                <p className="leading-[normal]">SERVING BUSINESSES</p>
+              <div
+                className="-translate-x-1/2 -translate-y-1/2 absolute left-[calc(50%-45.5px)] top-[136.5px] flex flex-col justify-center text-center leading-none not-italic text-[#00511e]"
+                data-node-id="76:463"
+              >
+                <p className="finaxis-serving-businesses-type m-0">SERVING BUSINESSES</p>
               </div>
               <p className="absolute capitalize font-['Caladea:Bold_Italic',sans-serif] italic leading-[normal] left-[calc(50%-438px)] text-[114.265px] text-black top-[152.79px]" data-node-id="76:464">
                 Across Industries
@@ -1057,7 +1347,11 @@ export default function FinaxisHome() {
         </div>
         <Component16 className="absolute bg-[#00511e] content-stretch flex items-center justify-center left-[233px] px-[24px] py-[16px] rounded-[38px] top-[1002px]" />
       </div>
-      <div className="absolute h-[734px] left-[99px] top-[5197px] w-[1723px]" data-node-id="76:524">
+      <div
+        id="finaxis-how-it-works"
+        className="absolute h-[734px] scroll-mt-[150px] left-[99px] top-[5197px] w-[1723px]"
+        data-node-id="76:524"
+      >
         <div className="absolute h-[308.047px] left-[260px] top-0 w-[1322px]" data-node-id="76:525">
           <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Bold_Italic',sans-serif] italic justify-center leading-[0] left-[calc(50%+381px)] text-[#1e9500] text-[38px] top-[22px] uppercase whitespace-nowrap" data-node-id="76:526">
             <p className="leading-[normal]">How It Works?</p>
@@ -1158,19 +1452,21 @@ export default function FinaxisHome() {
         </div>
         <Component17 className="-translate-x-1/2 absolute bg-[#035c24] content-stretch flex items-center justify-center left-[calc(50%-0.5px)] px-[24px] py-[16px] rounded-[38px] top-[679px]" />
       </div>
-      <div className="absolute bg-black h-[879px] left-[953px] rounded-[20px] top-[6026px] w-[727px]" data-node-id="76:595" />
-      <div className="absolute bg-[#00511e] h-[826px] left-[1452px] rounded-[20px] top-[6052px] w-[204px]" data-node-id="76:596" />
-      <div className="-translate-y-1/2 absolute flex flex-col font-['Oswald',sans-serif] justify-center leading-[0] left-[calc(50%+28px)] not-italic text-[239.168px] text-white top-[6162.5px] tracking-[2.3917px] uppercase whitespace-nowrap" data-node-id="76:597">
-        <p className="leading-[normal]">FINANCIAL</p>
-      </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-['Oswald',sans-serif] justify-center leading-[0] left-[calc(50%+28px)] not-italic text-[239.168px] text-white top-[6355.5px] tracking-[2.3917px] uppercase whitespace-nowrap" data-node-id="76:598">
-        <p className="leading-[normal]">SOLUTIONS</p>
-      </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-['Oswald',sans-serif] justify-center leading-[0] left-[calc(50%+28px)] not-italic text-[239.168px] text-white top-[6548.5px] tracking-[2.3917px] uppercase whitespace-nowrap" data-node-id="76:599">
-        <p className="leading-[normal]">DESIGNED</p>
-      </div>
-      <div className="-translate-y-1/2 absolute flex flex-col font-['Oswald',sans-serif] justify-center leading-[0] left-[calc(50%+28px)] not-italic text-[239.168px] text-white top-[6741.5px] tracking-[2.3917px] uppercase whitespace-nowrap" data-node-id="76:600">
-        <p className="leading-[normal] whitespace-pre">{`FOR  POS`}</p>
+      <div className="absolute left-[953px] top-[6026px] h-[879px] w-[727px] overflow-hidden rounded-[20px]" data-node-id="76:595">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute right-[24px] top-[26px] h-[826px] w-[204px] rounded-[20px] bg-[#00511e]" data-node-id="76:596" />
+        <div className="typography-procerus-display -translate-y-1/2 absolute top-[136.5px] left-0 right-0 flex items-center whitespace-nowrap px-6 pr-[260px] text-white">
+          <p className="m-0 p-0 leading-[inherit]">FINANCIAL</p>
+        </div>
+        <div className="typography-procerus-display -translate-y-1/2 absolute top-[329.5px] left-0 right-0 flex items-center whitespace-nowrap px-6 pr-[260px] text-white">
+          <p className="m-0 p-0 leading-[inherit]">SOLUTIONS</p>
+        </div>
+        <div className="typography-procerus-display -translate-y-1/2 absolute top-[522.5px] left-0 right-0 flex items-center whitespace-nowrap px-6 pr-[260px] text-white">
+          <p className="m-0 p-0 leading-[inherit]">DESIGNED</p>
+        </div>
+        <div className="typography-procerus-display -translate-y-1/2 absolute top-[715.5px] left-0 right-0 flex items-center whitespace-nowrap px-6 pr-[260px] text-white">
+          <p className="m-0 whitespace-pre p-0 leading-[inherit]">{`FOR  POS`}</p>
+        </div>
       </div>
       <div className="absolute flex h-[122.146px] items-center justify-center left-[1313px] top-[6693.68px] w-[123.62px]">
         <div className="flex-none rotate-[42.66deg]">
@@ -1188,7 +1484,7 @@ export default function FinaxisHome() {
             <p className="leading-[35px]">{`Worried about hefty payoffs? Don't be!`}</p>
           </div>
           <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Italic',sans-serif] italic justify-center leading-[0] left-[33px] text-[24px] text-black top-[715.5px] w-[631px]" data-node-id="76:608">
-            <p className="leading-[35px]">Finaxis understands the importance of the point of sale in scaling businesses, which is why we offer reliable POS financing options available on a monthly or transaction-based basis.</p>
+            <p className="leading-[35px]">Prismatechinc understands the importance of the point of sale in scaling businesses, which is why we offer reliable POS financing options available on a monthly or transaction-based basis.</p>
           </div>
           <div className="absolute h-[558px] left-0 top-0 w-[683px]" data-node-id="76:609">
             <div className="absolute inset-[-1.7%_-1.54%_-4.21%_-3.29%]">
@@ -1200,7 +1496,11 @@ export default function FinaxisHome() {
         </div>
       </div>
       <div className="-translate-x-1/2 absolute bg-gradient-to-r from-white h-[695px] left-1/2 to-[436.2%] to-[rgba(19,95,0,0.5)] top-[6984px] w-[1920px]" data-node-id="76:612" />
-      <div className="absolute h-[147px] left-[1171px] top-[7089.57px] w-[509px]" data-node-id="76:613">
+      <div
+        id="finaxis-contact"
+        className="absolute h-[147px] scroll-mt-[150px] left-[1171px] top-[7089.57px] w-[509px]"
+        data-node-id="76:613"
+      >
         <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Bold_Italic',sans-serif] italic justify-center leading-[0] left-[calc(50%-455.5px)] text-[#1e9500] text-[38px] top-[102px] uppercase whitespace-nowrap" data-node-id="76:614">
           <p className="leading-[normal]">Contact us to get a better POS today!</p>
         </div>
@@ -1230,22 +1530,22 @@ export default function FinaxisHome() {
         <div className="absolute contents left-0 top-0" data-node-id="76:635">
           <div className="absolute flex h-[261.358px] items-center justify-center left-[367.21px] top-[178.97px] w-[261.597px]">
             <div className="-scale-y-100 flex-none rotate-[-136.24deg]">
-              <div className="bg-[#1e9500] h-[181.025px] opacity-10 w-[188.847px]" data-node-id="76:636" />
+              <div className="h-[181.025px] w-[188.847px] bg-[rgba(30,149,0,0.05)]" data-node-id="76:636" />
             </div>
           </div>
           <div className="absolute flex h-[261.358px] items-center justify-center left-[183.61px] top-[359.44px] w-[261.597px]">
             <div className="-scale-y-100 flex-none rotate-[-136.24deg]">
-              <div className="bg-[#212121] h-[181.025px] opacity-10 w-[188.847px]" data-node-id="76:637" />
+              <div className="h-[181.025px] w-[188.847px] bg-[rgba(203,213,225,0.35)]" data-node-id="76:637" />
             </div>
           </div>
           <div className="absolute flex h-[261.358px] items-center justify-center left-[183.61px] top-0 w-[261.597px]">
             <div className="-scale-y-100 flex-none rotate-[-136.24deg]">
-              <div className="bg-[#212121] h-[181.025px] opacity-10 w-[188.847px]" data-node-id="76:638" />
+              <div className="h-[181.025px] w-[188.847px] bg-[rgba(203,213,225,0.35)]" data-node-id="76:638" />
             </div>
           </div>
           <div className="absolute flex h-[261.358px] items-center justify-center left-0 top-[180.47px] w-[261.597px]">
             <div className="-scale-y-100 flex-none rotate-[-136.24deg]">
-              <div className="bg-[#212121] h-[181.025px] opacity-10 w-[188.847px]" data-node-id="76:639" />
+              <div className="h-[181.025px] w-[188.847px] bg-[rgba(203,213,225,0.35)]" data-node-id="76:639" />
             </div>
           </div>
         </div>
@@ -1266,9 +1566,7 @@ export default function FinaxisHome() {
             Contact Us
           </p>
         </div>
-        <div className="absolute h-[476.496px] left-[444px] top-[134px] w-[1443.447px]" data-node-id="76:646">
-          <p className="-translate-x-1/2 absolute bg-clip-text bg-gradient-to-b font-bold font-['Clash Display',sans-serif] from-[#00511e] from-[38.275%] leading-[1.04] left-[calc(50%-0.22px)] not-italic text-[344.046px] text-[transparent] text-center to-[76.096%] to-[rgba(255,255,255,0)] top-[calc(50%-119.75px)] uppercase via-[55.207%] via-[rgba(0,81,30,0.55)] whitespace-nowrap" data-node-id="76:647">{`Finaxis `}</p>
-          <div className="absolute h-[147px] left-0 top-0 w-[1443.447px]" data-node-id="76:648">
+        <div className="absolute left-[444px] top-[134px] h-[147px] w-[1443.447px]" data-node-id="76:648">
             <div className="-translate-y-1/2 absolute capitalize flex flex-col font-normal font-['Clash Display',sans-serif] justify-center leading-[0] left-[calc(50%-721.72px)] not-italic text-[47px] text-black top-1/2 w-[232px]" data-node-id="76:649">
               <p className="leading-[1.04]">POS Financing Transact</p>
             </div>
@@ -1324,7 +1622,6 @@ export default function FinaxisHome() {
               </div>
             </div>
           </div>
-        </div>
         <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Regular',sans-serif] justify-center leading-[0] left-[calc(50%+821.28px)] not-italic text-[#1e9501] text-[47px] top-[calc(50%+286.5px)] whitespace-nowrap" data-node-id="76:673">
           <p className="leading-[1.04]">2026</p>
         </div>
@@ -1345,6 +1642,18 @@ export default function FinaxisHome() {
         <div className="-translate-x-1/2 absolute h-[179.38px] left-[calc(50%+594.47px)] top-[6669px] w-[154.579px]" data-node-id="76:688" data-name="ZED">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgZed} />
         </div>
+      </div>
+      {/* Figma frame: 1442×246 @ left 242, top 7930 — brand asset replaces live text */}
+      <div
+        className="absolute left-[242px] top-[7930px] z-10 flex h-[246.23033142089844px] w-[1442px] rotate-0 items-center justify-center opacity-100"
+        data-node-id="76:646"
+      >
+        <img
+          alt="PRISMA"
+          className="h-full w-full max-h-full object-contain object-center"
+          data-node-id="76:647"
+          src="/Group%2018513.png"
+        />
       </div>
     </div>
   );
