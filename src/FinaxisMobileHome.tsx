@@ -1,5 +1,7 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
+import { INDUSTRY_PANELS } from "./finaxisIndustriesData";
 import { submitPrismatechLead } from "./submitPrismatechLead";
 
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
@@ -30,13 +32,6 @@ const imgRetailCardRow2021 = "https://www.figma.com/api/mcp/asset/5c58554f-7c6f-
 const imgGif121024X5621 = "https://www.figma.com/api/mcp/asset/03562f45-bc92-4fea-aa2b-e97f29870edb";
 const imgRectangle1304 = "https://www.figma.com/api/mcp/asset/5ca09472-facc-468d-ba84-e2d5f631ce3c";
 const imgSvg = "https://www.figma.com/api/mcp/asset/26cf74df-8014-4764-b05b-33c3b3cc0564";
-
-const brandingFeatures = [
-  "Low-stock alerts",
-  "Unified In-Store Sales",
-  "Accurate Online Sales",
-  "Vendor Sales Reporting",
-] as const;
 
 const navLinks = [
   ["#finaxis-hero", "Home"],
@@ -92,6 +87,7 @@ export default function FinaxisMobileHome() {
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
   const [thankYouOpen, setThankYouOpen] = useState(false);
+  const [industryTab, setIndustryTab] = useState(0);
 
   useEffect(() => {
     const id = window.setTimeout(() => {
@@ -269,7 +265,7 @@ export default function FinaxisMobileHome() {
           <h1 className="finaxis-hero-display text-[clamp(1.85rem,8.5vw,3.5rem)] leading-[0.92] tracking-tight text-[#00511e]">
             POS SYSTEMS MADE ACCESSIBLE
           </h1>
-          <p className="mt-4 font-['Caladea',serif] text-[clamp(1.25rem,4.5vw,1.75rem)] font-normal italic text-black">
+          <p className="finaxis-hero-through-financing mt-4 font-['Caladea',serif] text-[clamp(1.25rem,4.5vw,1.75rem)] font-normal italic text-black">
             Through Smart Financing
           </p>
           <div className="mt-6 overflow-hidden rounded-2xl border border-[#272727] shadow-md">
@@ -447,42 +443,66 @@ export default function FinaxisMobileHome() {
             We help merchants access modern POS hardware with flexible payment options so you can scale without budget
             surprises.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {["Retail", "Restaurants", "Supermarkets", "Salons & Spas", "Service", "Cannabis"].map((label) => (
-              <span
-                key={label}
-                className="rounded-full border border-[#1e9501] bg-white px-3 py-1.5 font-['Satoshi:Medium',sans-serif] text-[13px] text-[#00511e]"
-              >
-                {label}
-              </span>
-            ))}
+          <div className="mt-4 flex flex-wrap gap-2" role="tablist" aria-label="Industries we serve">
+            {INDUSTRY_PANELS.map((panel, i) => {
+              const active = industryTab === i;
+              return (
+                <button
+                  key={panel.label}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  id={`finaxis-m-industry-tab-${i}`}
+                  aria-controls="finaxis-m-industry-panel"
+                  onClick={() => setIndustryTab(i)}
+                  className={`rounded-full border px-3 py-1.5 font-['Satoshi:Medium',sans-serif] text-[12px] outline-none transition-colors sm:text-[13px] focus-visible:ring-2 focus-visible:ring-[#1e9501] focus-visible:ring-offset-2 ${
+                    active
+                      ? "border-[#1e9501] bg-[#1e9501] text-white shadow-sm"
+                      : "border-[#1e9501] bg-white text-[#00511e] hover:bg-[#ecf8ed]"
+                  }`}
+                >
+                  {panel.label}
+                </button>
+              );
+            })}
           </div>
 
           <div id="finaxis-branding" className="scroll-mt-20 mt-10 border-t border-[#272727]/25 pt-10">
             <p className="font-['Caladea',serif] text-[0.95rem] font-bold uppercase tracking-wide text-[#1e9500]">
               We are here to help!
             </p>
-            <h2 className="mt-2 font-['Caladea',serif] text-[clamp(2rem,9vw,3.25rem)] font-bold italic leading-[1.05] text-black">
-              Branding &amp; Identity
-            </h2>
-            <p className="mt-4 font-['Satoshi:Regular',sans-serif] text-[15px] leading-[1.65] text-black">
-              Match the fast pace of shoppers with quick checkout processing via advanced POS for retail. Manage store
-              logistics, inventory, and stocking without worrying about human error and inaccuracy. Enjoy shorter queues
-              with better reviews today!
-            </p>
-            <p className="mt-4 font-['Satoshi:Medium',sans-serif] text-[15px] font-medium text-black">
-              Access powerful features such as:
-            </p>
-            <ul className="mt-3 space-y-3">
-              {brandingFeatures.map((label) => (
-                <li key={label} className="flex items-start gap-3">
-                  <img alt="" src={imgVector5} className="mt-1 size-4 shrink-0 object-contain" />
-                  <span className="font-['Satoshi:Bold',sans-serif] text-[15px] capitalize leading-snug text-black">
-                    {label}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div className="relative min-h-[12rem] overflow-hidden">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={industryTab}
+                  id="finaxis-m-industry-panel"
+                  role="tabpanel"
+                  aria-labelledby={`finaxis-m-industry-tab-${industryTab}`}
+                  initial={{ opacity: 0, x: 28 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -24 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <h2 className="finaxis-industry-panel__headline mt-2 font-['Caladea',serif] text-[clamp(2rem,9vw,3.25rem)] font-bold italic leading-[1.05] text-black normal-case">
+                    {INDUSTRY_PANELS[industryTab]?.headline}
+                  </h2>
+                  <p className="mt-4 font-['Satoshi:Regular',sans-serif] text-[15px] leading-[1.65] text-black">
+                    {INDUSTRY_PANELS[industryTab]?.body}
+                  </p>
+                  <p className="mt-4 font-['Satoshi:Medium',sans-serif] text-[15px] font-medium text-[#00511e]">
+                    Access powerful features such as:
+                  </p>
+                  <ul className="mt-3 space-y-3">
+                    {INDUSTRY_PANELS[industryTab]?.features.map((label) => (
+                      <li key={label} className="flex items-start gap-3">
+                        <img alt="" src={imgVector5} className="mt-1 size-4 shrink-0 object-contain" />
+                        <span className="font-['Satoshi:Bold',sans-serif] text-[15px] leading-snug text-black">{label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatePresence>
+            </div>
             <button
               type="button"
               onClick={openLeadPopup}
@@ -583,10 +603,13 @@ export default function FinaxisMobileHome() {
         </section>
 
         <section id="finaxis-contact" className="scroll-mt-20 border-t border-[#272727]/40 py-10">
-          <div className="mx-auto mb-6 max-w-[min(100%,280px)]">
+          <div className="mx-auto mb-4 max-w-[min(100%,280px)]">
             <img alt="" src={imgYouSell} className="w-full object-contain object-center" />
           </div>
-          <h2 className="font-['Caladea',serif] text-[1.35rem] font-bold italic text-[#1e9500]">
+          <p className="text-center font-['Caladea:Bold_Italic',serif] text-[clamp(2.25rem,11vw,3.5rem)] font-bold italic capitalize leading-[1.02] tracking-tight text-black">
+            We support
+          </p>
+          <h2 className="mt-5 font-['Caladea',serif] text-[1.35rem] font-bold italic text-[#1e9500]">
             Contact us for a better POS today
           </h2>
           <p className="mt-2 font-['Satoshi:Regular',sans-serif] text-[15px] leading-relaxed text-black">

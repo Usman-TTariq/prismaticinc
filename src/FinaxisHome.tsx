@@ -1,6 +1,8 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useContext, useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import { FinaxisDesktopScaleContext } from "./FinaxisDesktopScaleContext";
+import { INDUSTRY_PANELS } from "./finaxisIndustriesData";
 import { submitPrismatechLead } from "./submitPrismatechLead";
 
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
@@ -322,6 +324,7 @@ export default function FinaxisHome() {
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactSubmitError, setContactSubmitError] = useState<string | null>(null);
   const [thankYouOpen, setThankYouOpen] = useState(false);
+  const [industryTab, setIndustryTab] = useState(0);
 
   const finaxisDesktopScale = useContext(FinaxisDesktopScaleContext);
   /** Viewport px: artboard nav height (134) × scale — drawer/backdrop sit below fixed portal navbar. */
@@ -442,7 +445,7 @@ export default function FinaxisHome() {
           <p className="finaxis-hero-procerus-figma m-0 leading-[normal]">POS SYSTEMS MADE ACCESSIBLE</p>
         </div>
         <p
-          className="absolute left-[calc(50%-729.5px)] top-[249px] z-20 w-[1458px] text-center font-['Caladea',serif] text-[126px] font-normal capitalize italic leading-[normal] text-black"
+          className="finaxis-hero-through-financing absolute left-[calc(50%-729.5px)] top-[249px] z-20 w-[1458px] text-center font-['Caladea',serif] text-[126px] font-normal capitalize italic leading-[normal] text-black"
           data-node-id="76:143"
         >
           Through Smart Financing
@@ -1501,37 +1504,41 @@ export default function FinaxisHome() {
           <div className="-translate-x-1/2 absolute contents left-[calc(50%+2.5px)] top-[317px]" data-node-id="76:468">
             <div className="-translate-x-1/2 absolute contents left-[calc(50%+2.5px)] top-[317px]" data-node-id="76:469">
               <div className="-translate-x-1/2 absolute backdrop-blur-[4px] bg-[#f4f6ff] h-[60px] left-[calc(50%+2.5px)] rounded-[20px] top-[317px] w-[1160px]" data-node-id="76:470" />
-              <div className="-translate-x-1/2 absolute bg-white content-stretch flex gap-[10px] items-center left-[calc(50%+2.5px)] top-[327px]" data-node-id="76:471">
-                <div className="bg-[#1e9501] content-stretch drop-shadow-[3px_5px_6.35px_rgba(30,149,1,0.4)] flex h-[40px] items-center justify-center px-[49px] py-[8px] relative rounded-[10px] shrink-0 w-[148px]" data-node-id="76:472">
-                  <div className="flex flex-col font-['Inter:Semi_Bold',sans-serif] font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-center text-white tracking-[0.4px] whitespace-nowrap" data-node-id="76:473">
-                    <p className="leading-[normal]">Retail</p>
-                  </div>
-                </div>
-                <div className="bg-white content-stretch flex h-[40px] items-center justify-center px-[15px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="76:474">
-                  <div className="flex flex-col font-['Inter:Regular',sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-black text-center tracking-[0.4px] whitespace-nowrap" data-node-id="76:475">
-                    <p className="leading-[normal]">Restaurants</p>
-                  </div>
-                </div>
-                <div className="bg-white content-stretch flex h-[40px] items-center justify-center px-[15px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="76:476">
-                  <div className="flex flex-col font-['Inter:Regular',sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-black text-center tracking-[0.4px] whitespace-nowrap" data-node-id="76:477">
-                    <p className="leading-[normal]">Supermarkets</p>
-                  </div>
-                </div>
-                <div className="bg-white content-stretch flex h-[40px] items-center justify-center px-[15px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="76:478">
-                  <div className="flex flex-col font-['Inter:Regular',sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-black text-center tracking-[0.4px] whitespace-nowrap" data-node-id="76:479">
-                    <p className="leading-[normal]">{`Salons & Spas`}</p>
-                  </div>
-                </div>
-                <div className="bg-white content-stretch flex h-[40px] items-center justify-center px-[15px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="76:480">
-                  <div className="flex flex-col font-['Inter:Regular',sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-black text-center tracking-[0.4px] whitespace-nowrap" data-node-id="76:481">
-                    <p className="leading-[normal]">Service Industries</p>
-                  </div>
-                </div>
-                <div className="bg-white content-stretch flex h-[40px] items-center justify-center px-[15px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="76:482">
-                  <div className="flex flex-col font-['Inter:Regular',sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-black text-center tracking-[0.4px] whitespace-nowrap" data-node-id="76:483">
-                    <p className="leading-[normal]">Cannabis Dispensaries</p>
-                  </div>
-                </div>
+              <div
+                className="-translate-x-1/2 absolute flex gap-[10px] bg-white content-stretch items-center left-[calc(50%+2.5px)] top-[327px]"
+                data-node-id="76:471"
+                role="tablist"
+                aria-label="Industries we serve"
+              >
+                {INDUSTRY_PANELS.map((panel, i) => {
+                  const active = industryTab === i;
+                  return (
+                    <button
+                      key={panel.label}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      id={`finaxis-industry-tab-${i}`}
+                      aria-controls="finaxis-industry-panel"
+                      onClick={() => setIndustryTab(i)}
+                      className={`relative flex h-[40px] shrink-0 cursor-pointer items-center justify-center rounded-[10px] border-0 px-[15px] py-[8px] outline-none transition-[background-color,box-shadow,color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-[#1e9501] focus-visible:ring-offset-2 ${
+                        active
+                          ? "bg-[#1e9501] px-[49px] drop-shadow-[3px_5px_6.35px_rgba(30,149,1,0.4)]"
+                          : "bg-white hover:bg-[#ecf8ed] active:scale-[0.98]"
+                      }`}
+                    >
+                      <span
+                        className={`whitespace-nowrap text-center text-[20px] tracking-[0.4px] ${
+                          active
+                            ? "font-['Inter:Semi_Bold',sans-serif] font-semibold text-white"
+                            : "font-['Inter:Regular',sans-serif] font-normal text-black"
+                        }`}
+                      >
+                        {panel.label}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -1541,47 +1548,44 @@ export default function FinaxisHome() {
         </div>
         <div className="absolute h-[533px] left-[233px] top-[484px] w-[1447px]" data-node-id="76:485">
           <div className="absolute contents left-0 top-0" data-node-id="76:486">
-            <div className="absolute contents left-0 top-0" data-node-id="76:487">
-              <div className="-translate-y-1/2 absolute flex flex-col font-['Satoshi:Regular',sans-serif] justify-center leading-[0] left-0 not-italic text-[22px] text-black top-[176.5px] w-[753px]" data-node-id="76:488">
-                <p className="leading-[35px]">
-                  Match the fast pace of shoppers with quick checkout processing via advanced POS for retail. Manage store logistics, inventory, and stocking without worrying about human error and inaccuracy. Enjoy shorter queues with better reviews today!
-                  <br aria-hidden="true" />
-                  Access powerful features such as:
-                </p>
-              </div>
-              <div className="absolute contents left-0 top-[289px]" data-node-id="76:489">
-                <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Bold',sans-serif] justify-center leading-[0] left-[31px] not-italic text-[20px] text-black top-[306.5px] w-[215px]" data-node-id="76:490">
-                  <p className="leading-[35px]">low-stock alerts</p>
-                </div>
-                <div className="absolute inset-[55.53%_98.55%_40.53%_0]" data-node-id="76:491" data-name="Vector">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
-                </div>
-              </div>
-              <div className="absolute contents left-0 top-[344px]" data-node-id="76:492">
-                <div className="-translate-y-1/2 absolute capitalize flex flex-col font-['Satoshi:Bold',sans-serif] justify-center leading-[0] left-[31px] not-italic text-[20px] text-black top-[361.5px] w-[215px]" data-node-id="76:493">
-                  <p className="leading-[35px]">Unified In-Store Sales</p>
-                </div>
-                <div className="absolute inset-[65.85%_98.55%_30.21%_0]" data-node-id="76:494" data-name="Vector">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
-                </div>
-              </div>
-              <div className="absolute contents left-0 top-[399px]" data-node-id="76:495">
-                <div className="-translate-y-1/2 absolute flex flex-col font-['Satoshi:Bold',sans-serif] justify-center leading-[0] left-[31px] not-italic text-[20px] text-black top-[416.5px] w-[215px]" data-node-id="76:496">
-                  <p className="leading-[35px]">Accurate Online Sales</p>
-                </div>
-                <div className="absolute inset-[76.17%_98.55%_19.89%_0]" data-node-id="76:497" data-name="Vector">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
-                </div>
-              </div>
-              <div className="absolute contents left-0 top-[454px]" data-node-id="76:498">
-                <div className="-translate-y-1/2 absolute flex flex-col font-['Satoshi:Bold',sans-serif] justify-center leading-[0] left-[31px] not-italic text-[20px] text-black top-[471.5px] w-[230px]" data-node-id="76:499">
-                  <p className="leading-[35px]">Vendor Sales Reporting</p>
-                </div>
-                <div className="absolute inset-[85.93%_98.55%_10.13%_0]" data-node-id="76:500" data-name="Vector">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
-                </div>
-              </div>
-              <p className="absolute capitalize font-['Caladea:Bold_Italic',sans-serif] italic leading-[normal] left-0 text-[80px] text-black top-0 whitespace-nowrap" data-node-id="76:501">{`Branding & Identity`}</p>
+            <div className="absolute left-0 top-0 h-[500px] w-[753px]" data-node-id="76:487">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={industryTab}
+                  id="finaxis-industry-panel"
+                  role="tabpanel"
+                  aria-labelledby={`finaxis-industry-tab-${industryTab}`}
+                  className="finaxis-industry-panel absolute inset-0 flex w-full max-w-[753px] flex-col gap-4 pr-4"
+                  initial={{ opacity: 0, x: 48 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <h3
+                    className="finaxis-industry-panel__headline m-0 max-w-full font-['Caladea:Bold_Italic',serif] text-[clamp(2rem,3.6vw,4.25rem)] font-bold italic leading-[1.05] tracking-normal text-black normal-case"
+                    data-node-id="76:501"
+                  >
+                    {INDUSTRY_PANELS[industryTab]?.headline}
+                  </h3>
+                  <div className="font-['Satoshi:Regular',sans-serif] text-[22px] not-italic leading-[0] text-black" data-node-id="76:488">
+                    <p className="m-0 leading-[35px]">
+                      {INDUSTRY_PANELS[industryTab]?.body}
+                      <br aria-hidden="true" />
+                      <span className="font-['Satoshi:Medium',sans-serif] font-medium text-[#00511e]/90">
+                        Access powerful features such as:
+                      </span>
+                    </p>
+                  </div>
+                  <ul className="m-0 list-none space-y-3 p-0" data-node-id="76:489">
+                    {INDUSTRY_PANELS[industryTab]?.features.map((feat) => (
+                      <li key={feat} className="flex items-start gap-3">
+                        <img alt="" className="mt-1 size-4 shrink-0 object-contain" src={imgVector5} width={16} height={16} />
+                        <span className="font-['Satoshi:Bold',sans-serif] text-[20px] leading-[35px] text-black">{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
           <div className="absolute h-[473px] left-[500px] top-[60px] w-[947px]" data-node-id="76:502">
