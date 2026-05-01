@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import { AGENCY_IMG } from "./prismaAgencyAssets";
 import { submitPrismatechLead } from "./submitPrismatechLead";
 
@@ -627,7 +628,7 @@ export default function PrismaAgencyLanding() {
                   </span>
                   <p className="text-[15px] font-semibold text-white sm:text-base">Our Core Services</p>
                 </div>
-                <h2 className="mx-auto mt-4 max-w-4xl text-[clamp(1.85rem,4vw,3.35rem)] font-bold leading-[1.12] tracking-tight text-[#e8e8e8]">
+                <h2 className="mx-auto mt-4 max-w-4xl text-[clamp(1.85rem,4vw,3.35rem)] font-semibold leading-[1.12] tracking-tight text-[#e8e8e8]">
                   Digital Solutions That Drive Real Results
                 </h2>
               </div>
@@ -636,7 +637,7 @@ export default function PrismaAgencyLanding() {
                 {[
                   { title: ["Social Media", "Marketing"], icon: AGENCY_IMG.serviceIcon },
                   { title: ["Content", "Marketing"], icon: AGENCY_IMG.serviceIcon1 },
-                  { title: ["PPC Advertising"], icon: AGENCY_IMG.serviceIcon2 },
+                  { title: ["PPC", "Advertising"], icon: AGENCY_IMG.serviceIcon2 },
                 ].map((card) => (
                   <article
                     key={card.title.join()}
@@ -663,9 +664,13 @@ export default function PrismaAgencyLanding() {
                           <img alt="" src={card.icon} className="size-full object-contain" />
                         </div>
                       </div>
-                      <div className="min-w-0 pt-0.5 text-left">
+                      {/* Fixed min height = two title lines so body copy starts on one row across cards */}
+                      <div className="min-h-[3.35rem] min-w-0 flex-1 text-left sm:min-h-[3.65rem]">
                         {card.title.map((line) => (
-                          <p key={line} className="text-[1.35rem] font-bold leading-tight text-white sm:text-[1.5rem]">
+                          <p
+                            key={line}
+                            className="text-[1.35rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[1.5rem] sm:leading-[1.12]"
+                          >
                             {line}
                           </p>
                         ))}
@@ -678,10 +683,10 @@ export default function PrismaAgencyLanding() {
                     <button
                       type="button"
                       onClick={openLeadPopup}
-                      className="mt-6 flex w-full cursor-pointer items-center justify-between gap-3 rounded-full border bg-[#0e0e0e] py-2.5 pl-5 pr-2 text-left sm:py-3 sm:pl-6"
+                      className="mt-6 grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-2 rounded-full border bg-[#0e0e0e] py-2.5 pl-4 pr-2 sm:py-3 sm:pl-5"
                       style={{ borderColor: "rgba(188, 19, 254, 0.35)" }}
                     >
-                      <span className="text-[15px] font-semibold text-white sm:text-[16px]">View Details</span>
+                      <span className="text-center text-[15px] font-semibold text-white sm:text-[16px]">View Details</span>
                       <span
                         className="flex size-10 shrink-0 items-center justify-center rounded-full sm:size-11"
                         style={{ backgroundColor: accent }}
@@ -713,8 +718,8 @@ export default function PrismaAgencyLanding() {
           {/* How it Work — Figma ~1860×813, top corners 25px only */}
           <section className="relative mx-auto mt-10 w-full max-w-[1860px] sm:mt-16 md:mt-24">
             <div className="flex min-h-0 flex-col overflow-hidden rounded-t-2xl border border-white/[0.08] bg-[#050505] px-4 py-8 sm:rounded-t-[25px] sm:px-8 sm:py-12 lg:min-h-[813.55px] lg:px-10 lg:py-14">
-              <div className="grid gap-8 sm:gap-10 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-20">
-                <div>
+              <div className="flex flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-x-10 lg:gap-y-0 xl:gap-x-14 2xl:gap-x-20">
+                <div className="min-w-0 lg:max-w-[min(100%,560px)] xl:max-w-[600px]">
                   <div className="flex items-center gap-3">
                     <span
                       className="flex size-9 shrink-0 items-center justify-center rounded-full sm:size-10"
@@ -730,7 +735,7 @@ export default function PrismaAgencyLanding() {
                     <span className="block text-[#a8a8a8]">Digital Success</span>
                   </h2>
                 </div>
-                <div className="max-w-xl lg:justify-self-end lg:text-left">
+                <div className="min-w-0 max-w-xl shrink-0 text-left lg:max-w-[400px] lg:pt-1 xl:max-w-[440px]">
                   <p className="text-[16px] leading-relaxed text-[#a3a3a3] sm:text-[18px] lg:text-[19px]">
                     Our proven process combines research, strategy, and creativity to deliver tailored solutions that drive
                     measurable results.
@@ -738,7 +743,7 @@ export default function PrismaAgencyLanding() {
                   <button
                     type="button"
                     onClick={openLeadPopup}
-                    className="mt-5 inline-flex cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left text-[16px] font-semibold no-underline sm:text-[17px]"
+                    className="mt-6 inline-flex cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left text-[16px] font-semibold no-underline sm:mt-7 sm:text-[17px]"
                     style={{ color: accent }}
                   >
                     Get Started Now
@@ -755,8 +760,26 @@ export default function PrismaAgencyLanding() {
                 </div>
               </div>
 
-              <div className="mt-10 flex flex-1 flex-col lg:mt-12">
-                <div className="grid flex-1 grid-cols-1 divide-y divide-white/[0.08] rounded-[22px] border border-white/[0.08] bg-[#0a0a0a] p-6 sm:p-8 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
+              <div className="mt-12 flex flex-1 flex-col sm:mt-14 lg:mt-16 xl:mt-[4.5rem]">
+                {/* Figma process strip: ~1469.54×365.02, radius 28.79, border 1.15; inset 2.3 glow */}
+                <div
+                  className="relative mx-auto grid w-full max-w-full grid-cols-1 divide-y divide-white/[0.08] bg-black p-5 sm:p-6 lg:h-[365.02px] lg:min-h-[365.02px] lg:grid-cols-4 lg:divide-x lg:divide-y-0 lg:overflow-hidden lg:px-6 lg:py-6 xl:px-7 xl:py-7"
+                  style={{
+                    maxWidth: "min(100%, 1469.54px)",
+                    borderRadius: "28.79px",
+                    borderWidth: "1.15px",
+                    borderStyle: "solid",
+                    borderColor: "rgba(188, 19, 254, 0.26)",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)",
+                  }}
+                >
+                  <div
+                    className="pointer-events-none absolute inset-[2.3px] z-0 rounded-[calc(28.79px-2.3px)] opacity-[0.07]"
+                    style={{
+                      background: `linear-gradient(180deg, transparent 35%, ${accent} 100%)`,
+                    }}
+                    aria-hidden
+                  />
                   {[
                     {
                       n: "01",
@@ -783,13 +806,22 @@ export default function PrismaAgencyLanding() {
                       i: AGENCY_IMG.processIcon3,
                     },
                   ].map((step) => (
-                    <div key={step.n} className="flex flex-col gap-4 px-1 py-6 sm:px-2 sm:py-8 lg:px-4 lg:py-5 xl:px-6">
-                      <div className="flex items-start justify-between gap-3">
-                        <img alt="" src={step.i} className="size-12 object-contain sm:size-14" />
-                        <span className="text-[15px] font-semibold tabular-nums text-white/90 sm:text-base">{step.n}</span>
+                    <div
+                      key={step.n}
+                      className="relative z-[1] flex min-h-0 flex-col px-1 py-6 sm:px-3 sm:py-7 lg:h-full lg:min-h-0 lg:gap-0 lg:px-3 lg:py-0 xl:px-4"
+                    >
+                      <div className="flex shrink-0 items-start justify-between gap-3">
+                        <img alt="" src={step.i} className="size-12 object-contain sm:size-[52px] lg:size-[48px]" />
+                        <span className="text-[14px] font-semibold tabular-nums text-white/85 sm:text-[15px] lg:text-[13px]">
+                          {step.n}
+                        </span>
                       </div>
-                      <h3 className="text-lg font-bold leading-snug text-white sm:text-xl">{step.t}</h3>
-                      <p className="text-[14px] leading-relaxed text-[#9ca3af] sm:text-[15px]">{step.b}</p>
+                      <h3 className="mt-4 shrink-0 text-base font-semibold leading-snug tracking-tight text-white sm:mt-5 sm:text-lg lg:mt-4 lg:text-[1.05rem] lg:leading-tight">
+                        {step.t}
+                      </h3>
+                      <p className="mt-2.5 min-h-0 flex-1 text-[13px] leading-relaxed text-[#9ca3af] sm:mt-3 sm:text-[14px] lg:mt-2.5 lg:text-[13px] lg:leading-[1.55]">
+                        {step.b}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -1156,12 +1188,12 @@ export default function PrismaAgencyLanding() {
                   <span className="font-semibold text-[#d6d6d6]">PrismaTech Inc.</span> All Rights Reserved.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-                  <a href="#top" className="transition hover:text-white">
+                  <Link to="/terms-of-service" className="no-underline transition hover:text-white">
                     Terms of Service
-                  </a>
-                  <a href="#top" className="transition hover:text-white">
+                  </Link>
+                  <Link to="/privacy-policy" className="no-underline transition hover:text-white">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
