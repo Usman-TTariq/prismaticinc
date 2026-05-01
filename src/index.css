@@ -3,7 +3,7 @@
 /* Figma node 2:1251 — hero headline “Amplify your brand…” (Prisma Tech) */
 .prisma-hero-h1 {
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
   font-size: clamp(36px, 5.6vw, 107.66px);
   /* 139.96 / 107.66 — keeps Figma ratio when font scales */

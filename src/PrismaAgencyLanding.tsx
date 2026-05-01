@@ -209,10 +209,10 @@ export default function PrismaAgencyLanding() {
             <button
               type="button"
               onClick={openLeadPopup}
-              className="rounded-full border border-white/10 px-4 py-2 text-[14px] font-semibold text-white transition hover:border-[rgba(188,19,254,0.45)] hover:text-white"
+              className={`rounded-full border border-white/10 px-5 py-2.5 text-[15px] font-semibold leading-none tracking-wide text-white transition hover:border-[rgba(188,19,254,0.45)] hover:text-white lg:px-6 lg:py-3 lg:text-[17px] lg:tracking-[0.06em] ${font}`}
               style={{ boxShadow: `0 0 20px ${accentShadow}` }}
             >
-              Free consult
+              Free Consultation
             </button>
           </nav>
           <div className="flex shrink-0 items-center gap-2">
@@ -341,13 +341,13 @@ export default function PrismaAgencyLanding() {
                 <button
                   type="button"
                   onClick={openLeadPopup}
-                  className="flex h-[52px] w-full items-center justify-center rounded-full text-[15px] font-semibold text-white"
+                  className="flex h-[52px] w-full items-center justify-center rounded-full text-[15px] font-medium text-white"
                   style={{
                     background: `linear-gradient(145deg, ${accent}, #8b0bc4)`,
                     boxShadow: `0 0 28px ${accentShadow}`,
                   }}
                 >
-                  Free consultation
+                  Free Consultation
                 </button>
                 <a
                   href={`tel:${PRISMATECH_PHONE_TEL}`}
@@ -379,6 +379,14 @@ export default function PrismaAgencyLanding() {
                 style={{
                   background: `radial-gradient(ellipse 80% 50% at 70% 60%, ${accent} 0%, transparent 55%)`,
                 }}
+              />
+              {/* Right-edge fade on photo (reads as soft vignette into dark) */}
+              <div
+                className="pointer-events-none absolute inset-0 z-[1]"
+                style={{
+                  background: `linear-gradient(270deg, rgba(5,5,8,0.68) 0%, rgba(5,5,8,0.32) 14%, rgba(5,5,8,0.08) 32%, transparent 52%)`,
+                }}
+                aria-hidden
               />
             </div>
             <div className="relative flex min-h-[min(68dvh,560px)] flex-col pb-8 pt-5 sm:min-h-[min(78dvh,720px)] sm:pb-14 sm:pt-6 lg:min-h-[780px] lg:pb-16">
