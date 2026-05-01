@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { AGENCY_IMG } from "./prismaAgencyAssets";
@@ -9,6 +9,58 @@ import { submitPrismatechLead } from "./submitPrismatechLead";
 const accent = "#bc13fe";
 const accentShadow = "rgba(188, 19, 254, 0.5)";
 const font = "font-['Plus_Jakarta_Sans',ui-sans-serif,system-ui,sans-serif]";
+
+function MerchantServicesIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <rect x="9" y="13" width="30" height="22" rx="3" stroke={accent} strokeWidth="1.85" />
+      <path d="M15 23h18M15 29h10" stroke={accent} strokeWidth="1.85" strokeLinecap="round" />
+      <path
+        d="M33 26.5c1.5 0 2.5 1.2 2.5 2.5v.5h-5v-.5c0-1.3 1-2.5 2.5-2.5Z"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+const CORE_SERVICE_CARDS = [
+  {
+    key: "merchant",
+    title: ["Merchant", "Services"] as const,
+    description:
+      "Accept payments easily with secure, fast, and reliable processing solutions designed for modern businesses.",
+  },
+  {
+    key: "social",
+    title: ["Social Media", "Marketing"] as const,
+    description:
+      "Grow your brand with strategic content, targeted campaigns, and consistent engagement across all major platforms.",
+    iconUrl: AGENCY_IMG.serviceIcon,
+  },
+  {
+    key: "content",
+    title: ["Content", "Marketing"] as const,
+    description:
+      "Create impactful content that attracts, educates, and converts your audience into loyal customers.",
+    iconUrl: AGENCY_IMG.serviceIcon1,
+  },
+  {
+    key: "ppc",
+    title: ["PPC", "Advertising"] as const,
+    description:
+      "Reach high-intent customers with optimized paid search and display campaigns that maximize ROI and scale.",
+    iconUrl: AGENCY_IMG.serviceIcon2,
+  },
+] as const;
+
+/** Core service card — compact layout (`w-[min(400px,…)]` below). */
+const FIGMA_CORE_SERVICE_CARD = {
+  height: 375,
+  radius: 24,
+  border: 1.15,
+} as const;
 
 /** Same delay as Finaxis home lead popup */
 const AGENCY_LEAD_POPUP_DELAY_MS = 5 * 1000;
@@ -27,6 +79,65 @@ export default function PrismaAgencyLanding() {
   const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadSubmitError, setLeadSubmitError] = useState<string | null>(null);
+
+  const servicesStripRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = servicesStripRef.current;
+    if (!el) return;
+
+    const wheelDeltaY = (e: WheelEvent) => {
+      if (e.deltaMode === 1) return e.deltaY * 16;
+      if (e.deltaMode === 2) return e.deltaY * el.clientWidth;
+      return e.deltaY;
+    };
+
+    /** Capture: wheel on card text/buttons was eaten by inner overflow-y; map vertical wheel → horizontal strip. */
+    const onWheelCapture = (e: WheelEvent) => {
+      if (el.scrollWidth <= el.clientWidth + 1) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const dy = wheelDeltaY(e);
+      if (dy === 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      el.scrollLeft += dy;
+    };
+    el.addEventListener("wheel", onWheelCapture, { passive: false, capture: true });
+
+    let dragStartX = 0;
+    let dragScroll0 = 0;
+    let dragging = false;
+    const onDocMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      el.scrollLeft = dragScroll0 - (e.clientX - dragStartX);
+    };
+    const onDocUp = () => {
+      dragging = false;
+      el.classList.remove("cursor-grabbing");
+      document.removeEventListener("pointermove", onDocMove);
+      document.removeEventListener("pointerup", onDocUp);
+      document.removeEventListener("pointercancel", onDocUp);
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.button !== 0) return;
+      const t = e.target as Element | null;
+      if (t?.closest("button, a, input, textarea, select")) return;
+      if (el.scrollWidth <= el.clientWidth + 1) return;
+      dragging = true;
+      dragStartX = e.clientX;
+      dragScroll0 = el.scrollLeft;
+      el.classList.add("cursor-grabbing");
+      document.addEventListener("pointermove", onDocMove);
+      document.addEventListener("pointerup", onDocUp);
+      document.addEventListener("pointercancel", onDocUp);
+    };
+
+    el.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      el.removeEventListener("wheel", onWheelCapture, { capture: true } as AddEventListenerOptions);
+      el.removeEventListener("pointerdown", onPointerDown);
+      onDocUp();
+    };
+  }, []);
 
   const dismissLeadPopup = useCallback(() => {
     setLeadModalOpen(false);
@@ -82,7 +193,7 @@ export default function PrismaAgencyLanding() {
     };
   }, [mobileNavOpen]);
 
-  /** Same-page #hash links — smooth scroll (CSS alone is flaky with doc overflow-x-clip). */
+  /** Same-page #hash links — smooth scroll (CSS alone is flaky with doc overflow-x hidden). */
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -368,9 +479,9 @@ export default function PrismaAgencyLanding() {
 
         <main
           id="top"
-          className="mx-auto mt-3 max-w-[1860px] scroll-mt-24 overflow-x-clip px-0 sm:mt-6 sm:scroll-mt-28 md:mt-7"
+          className="mx-auto mt-3 max-w-[1860px] min-w-0 scroll-mt-24 overflow-x-visible px-0 sm:mt-6 sm:scroll-mt-28 md:mt-7"
         >
-          {/* Hero — overflow-x-clip keeps radius; y visible so headline can wrap without clipping */}
+          {/* Hero — section uses overflow-x-clip; main stays visible so nested horizontal strips can scroll */}
           <section className="relative overflow-x-clip overflow-y-visible rounded-2xl border border-[#1f1f1f] sm:rounded-[25px]">
             <div className="absolute inset-0 overflow-hidden rounded-2xl sm:rounded-[25px]">
               <img alt="" src={AGENCY_IMG.heroPhoto} className="size-full object-cover object-center" />
@@ -614,9 +725,9 @@ export default function PrismaAgencyLanding() {
           {/* Our Core Services — Figma cards ~476×447, radius 28.79px, border 1.15px */}
           <section
             id="services"
-            className="core-services-section relative mx-auto mt-10 max-w-[1860px] scroll-mt-24 overflow-hidden rounded-2xl border border-white/[0.08] px-3 py-10 sm:mt-16 sm:scroll-mt-28 sm:rounded-[25px] sm:px-8 sm:py-14 md:mt-20 lg:px-10 lg:py-16"
+            className="core-services-section relative mx-auto mt-10 max-w-[1860px] min-w-0 scroll-mt-24 overflow-visible rounded-2xl border border-white/[0.08] px-3 py-10 sm:mt-16 sm:scroll-mt-28 sm:rounded-[25px] sm:px-8 sm:py-14 md:mt-20 lg:px-10 lg:py-16"
           >
-            <div className="relative z-[1]">
+            <div className="relative z-[1] min-w-0">
               <div className="flex flex-col items-center text-center">
                 <div className="flex items-center gap-3">
                   <span
@@ -633,72 +744,80 @@ export default function PrismaAgencyLanding() {
                 </h2>
               </div>
 
-              <div className="mx-auto mt-10 grid max-w-[1520px] justify-items-center gap-6 sm:gap-7 lg:mt-12 lg:grid-cols-3 lg:justify-items-stretch lg:gap-5 xl:gap-6">
-                {[
-                  { title: ["Social Media", "Marketing"], icon: AGENCY_IMG.serviceIcon },
-                  { title: ["Content", "Marketing"], icon: AGENCY_IMG.serviceIcon1 },
-                  { title: ["PPC", "Advertising"], icon: AGENCY_IMG.serviceIcon2 },
-                ].map((card) => (
+              <div className="mx-auto mt-10 w-full min-w-0 max-w-[1520px] lg:mt-12">
+                <div
+                  ref={servicesStripRef}
+                  className="scrollbar-hide flex w-full min-w-0 cursor-grab touch-pan-x snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain py-1 pl-3 pr-8 scroll-pl-3 scroll-pr-3 [-webkit-overflow-scrolling:touch] active:cursor-grabbing sm:gap-5 sm:scroll-pl-0 sm:scroll-pr-10 sm:pl-0 sm:pr-10 md:gap-6"
+                  role="region"
+                  aria-label="Our core services"
+                >
+                {CORE_SERVICE_CARDS.map((card) => (
                   <article
-                    key={card.title.join()}
-                    className="flex w-full max-w-[476px] flex-col rounded-2xl p-5 sm:rounded-[28.79px] sm:p-7 md:min-h-[447px]"
+                    key={card.key}
+                    className="box-border flex w-[min(400px,calc((100vw-3rem)*0.88))] shrink-0 snap-center flex-col p-4 sm:w-[min(400px,calc(100vw-4rem))] sm:snap-start sm:p-5"
                     style={{
-                      width: "100%",
-                      maxWidth: "475.98px",
-                      backgroundColor: "#121212",
-                      borderWidth: "1.15px",
+                      height: `${FIGMA_CORE_SERVICE_CARD.height}px`,
+                      minHeight: `${FIGMA_CORE_SERVICE_CARD.height}px`,
+                      borderRadius: `${FIGMA_CORE_SERVICE_CARD.radius}px`,
+                      borderWidth: `${FIGMA_CORE_SERVICE_CARD.border}px`,
                       borderStyle: "solid",
                       borderColor: "rgba(188, 19, 254, 0.28)",
+                      backgroundColor: "#121212",
                       boxShadow: "0 0 40px rgba(188, 19, 254, 0.04)",
                     }}
                   >
-                    <div className="flex items-start gap-3.5 sm:gap-4">
-                      <div
-                        className="flex size-[76px] shrink-0 items-center justify-center rounded-[22px] sm:size-[84px]"
-                        style={{
-                          background: "linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%)",
-                          boxShadow: "inset 0 2px 8px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
-                        }}
-                      >
-                        <div className="relative size-[48px] sm:size-[52px]">
-                          <img alt="" src={card.icon} className="size-full object-contain" />
+                      <div className="flex items-start gap-3 sm:gap-3.5">
+                        <div
+                          className="flex size-[68px] shrink-0 items-center justify-center rounded-[18px] sm:size-[72px] sm:rounded-[20px]"
+                          style={{
+                            background: "linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%)",
+                            boxShadow: "inset 0 2px 8px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
+                          }}
+                        >
+                          <div className="relative size-[42px] sm:size-[46px]">
+                            {"iconUrl" in card && card.iconUrl ? (
+                              <img alt="" src={card.iconUrl} className="size-full object-contain" />
+                            ) : (
+                              <MerchantServicesIcon className="size-full" />
+                            )}
+                          </div>
+                        </div>
+                        <div className="min-h-[3rem] min-w-0 flex-1 text-left sm:min-h-[3.25rem]">
+                          {card.title.map((line) => (
+                            <p
+                              key={line}
+                              className="text-[1.2rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[1.35rem] sm:leading-[1.12]"
+                            >
+                              {line}
+                            </p>
+                          ))}
                         </div>
                       </div>
-                      {/* Fixed min height = two title lines so body copy starts on one row across cards */}
-                      <div className="min-h-[3.35rem] min-w-0 flex-1 text-left sm:min-h-[3.65rem]">
-                        {card.title.map((line) => (
-                          <p
-                            key={line}
-                            className="text-[1.35rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[1.5rem] sm:leading-[1.12]"
-                          >
-                            {line}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                    <p className="mt-5 flex-1 text-left text-[15px] leading-relaxed text-[#a3a3a3] sm:text-[16px]">
-                      Build brand awareness &amp; engage your audience effectively lorem ipsum dolor sit amet consectetur
-                      adip.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={openLeadPopup}
-                      className="mt-6 grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-2 rounded-full border bg-[#0e0e0e] py-2.5 pl-4 pr-2 sm:py-3 sm:pl-5"
-                      style={{ borderColor: "rgba(188, 19, 254, 0.35)" }}
-                    >
-                      <span className="text-center text-[15px] font-semibold text-white sm:text-[16px]">View Details</span>
-                      <span
-                        className="flex size-10 shrink-0 items-center justify-center rounded-full sm:size-11"
-                        style={{ backgroundColor: accent }}
-                        aria-hidden
+                      <p className="mt-4 min-h-0 flex-1 overflow-hidden text-left text-[14px] leading-relaxed text-[#a3a3a3] sm:text-[15px]">
+                        {card.description}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={openLeadPopup}
+                        className="mt-auto grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-2 rounded-full border bg-[#0e0e0e] py-2 pl-3 pr-2 pt-4 sm:py-2.5 sm:pl-4"
+                        style={{ borderColor: "rgba(188, 19, 254, 0.35)" }}
                       >
-                        <svg className="size-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <path d="M7 17 17 7M17 7H9M17 7v8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
-                    </button>
-                  </article>
-                ))}
+                        <span className="text-center text-[14px] font-semibold text-white sm:text-[15px]">
+                          Inquire Details
+                        </span>
+                        <span
+                          className="flex size-10 shrink-0 items-center justify-center rounded-full sm:size-11"
+                          style={{ backgroundColor: accent }}
+                          aria-hidden
+                        >
+                          <svg className="size-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                            <path d="M7 17 17 7M17 7H9M17 7v8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
+                      </button>
+                    </article>
+                  ))}
+                </div>
               </div>
 
               <p className="relative z-[1] mx-auto mt-8 max-w-3xl px-1 text-center text-[15px] leading-relaxed text-white sm:mt-12 sm:mt-14 sm:text-[18px]">
@@ -1144,38 +1263,6 @@ export default function PrismaAgencyLanding() {
                       <span className="text-[#d8d8d8]">949 Brandon Way, Fairfield, CA 94533</span>
                     </li>
                   </ul>
-                  <p className="mt-10 text-base font-bold text-white sm:text-lg">Social Media</p>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    {(
-                      [
-                        { label: "Facebook", href: "https://facebook.com", path: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" },
-                        {
-                          label: "Instagram",
-                          href: "https://instagram.com",
-                          path: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z",
-                        },
-                        {
-                          label: "LinkedIn",
-                          href: "https://linkedin.com",
-                          path: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.07 2.07 0 01-2.063-2.065A2.07 2.07 0 015.337 3.3a2.07 2.07 0 012.063 2.068 2.07 2.07 0 01-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
-                        },
-                      ] as const
-                    ).map((s) => (
-                      <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex size-[52px] items-center justify-center rounded-xl border border-white/[0.06] bg-[#0c0c0c] transition hover:border-[rgba(188,19,254,0.35)]"
-                        style={{ boxShadow: "0 0 28px rgba(188, 19, 254, 0.18)" }}
-                        aria-label={s.label}
-                      >
-                        <svg className="size-[22px]" style={{ color: accent }} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                          <path d={s.path} />
-                        </svg>
-                      </a>
-                    ))}
-                  </div>
                 </div>
               </div>
 
