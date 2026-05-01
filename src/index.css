@@ -1,5 +1,88 @@
 @import "tailwindcss";
 
+/* Figma node 2:1251 — hero headline “Amplify your brand…” (Prisma Tech) */
+.prisma-hero-h1 {
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: clamp(36px, 5.6vw, 107.66px);
+  /* 139.96 / 107.66 — keeps Figma ratio when font scales */
+  line-height: 130.02%;
+  letter-spacing: 0;
+  /* Figma leading-trim: NONE — not widely supported in browsers yet */
+  vertical-align: middle;
+  text-align: left;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.45),
+    0 8px 48px rgba(0, 0, 0, 0.35),
+    0 0 80px rgba(188, 19, 254, 0.12);
+}
+
+/* About / expertise — below hero (dark grid + cards) */
+.about-expertise-section {
+  background-color: #000000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 71px,
+    rgba(255, 255, 255, 0.035) 71px,
+    rgba(255, 255, 255, 0.035) 72px
+  );
+}
+
+/* Our Core Services — grid + bottom purple wash */
+.core-services-section {
+  position: relative;
+  background-color: #000000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 71px,
+    rgba(255, 255, 255, 0.035) 71px,
+    rgba(255, 255, 255, 0.035) 72px
+  );
+}
+
+.core-services-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 85% 60% at 50% 100%, rgba(188, 19, 254, 0.12), transparent 58%);
+}
+
+/*
+  Figma hero content group (node 4:1345): 1388.55 × 672.44 @ left 241.45, top 89.07
+  on 1860px-wide hero — scales down on narrow viewports.
+*/
+.hero-figma-frame {
+  box-sizing: border-box;
+  width: min(100%, 1388.55px);
+  min-height: min(672.44px, 58vh);
+  padding-top: clamp(32px, 4.7vw, 89.07px);
+  padding-left: clamp(16px, 12.98vw, 241.45px);
+  padding-right: clamp(16px, 2rem, 32px);
+  opacity: 1;
+}
+
+@media (max-width: 639px) {
+  .hero-figma-frame {
+    min-height: min(480px, 68dvh);
+    padding-top: clamp(16px, 5vw, 28px);
+    /* Figma left offset scales poorly on narrow phones — keep readable line length */
+    padding-left: max(12px, 3.5vw);
+    padding-right: max(12px, 3.5vw);
+  }
+
+  .prisma-hero-h1 {
+    font-size: clamp(26px, 7.2vw, 40px);
+    line-height: 1.22;
+  }
+}
+
 /* Procerus: files live in `public/Procerus/` → served from `/Procerus/` (Vite). */
 @font-face {
   font-family: Procerus;
@@ -13,6 +96,17 @@
 
 /* Figma MCP mask helpers (Tailwind does not emit these by default) */
 @layer utilities {
+  /* Hide scrollbars but keep overflow scroll (e.g. lead popup form column) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
   .mask-alpha {
     mask-type: alpha;
     -webkit-mask-type: alpha;
@@ -153,7 +247,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Bottom-left “Our Notable Work” services — lighter weight, room to breathe */
+/* Bottom-left “Our Notable Work” capability tags — lighter weight, room to breathe */
 .finaxis-notable-work-services {
   display: flex;
   flex-wrap: wrap;
@@ -194,8 +288,10 @@
   font-synthesis: none;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
@@ -205,5 +301,5 @@ body,
   min-height: 100%;
   max-width: 100%;
   overflow-x: clip;
-  background-color: #f7f7f7;
+  background-color: #07070c;
 }

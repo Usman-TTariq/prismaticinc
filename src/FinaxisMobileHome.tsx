@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import { INDUSTRY_PANELS } from "./finaxisIndustriesData";
+import { FinaxisWireframeGlobeSpin } from "./FinaxisWireframeGlobeSpin";
 import { submitPrismatechLead } from "./submitPrismatechLead";
 
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
@@ -307,15 +308,15 @@ export default function FinaxisMobileHome() {
         <section id="finaxis-notable" className="scroll-mt-20 border-t border-[#272727]/40 py-8">
           <h2 className="font-['Satoshi:Medium',sans-serif] text-[20px] font-medium text-black">Our notable work</h2>
           <div className="mt-3 flex flex-wrap gap-x-2 gap-y-1 font-['Satoshi:Medium',sans-serif] text-[15px] text-[#333]">
-            <span>Website Design</span>
+            <span>POS financing</span>
             <span className="text-[#1e9500]">✦</span>
-            <span>Branding</span>
+            <span>Lease-to-own</span>
             <span className="text-[#1e9500]">✦</span>
-            <span>Strategy</span>
+            <span>Store rollout</span>
             <span className="text-[#1e9500]">✦</span>
-            <span>Digital marketing</span>
+            <span>Flexible terms</span>
             <span className="text-[#1e9500]">✦</span>
-            <span>Analytics</span>
+            <span>Expert support</span>
           </div>
           {/* Social proof avatars (match reference layout: overlap, green outer rings, black center) */}
           <div className="mt-6 flex justify-center">
@@ -363,23 +364,25 @@ export default function FinaxisMobileHome() {
                 </p>
               </div>
               <div className="relative h-28 w-28 shrink-0">
-                <div
-                  className="mask-alpha mask-no-clip mask-no-repeat relative size-full"
-                  style={{
-                    maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
-                    WebkitMaskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
-                    maskSize: "contain",
-                    maskPosition: "center",
-                    WebkitMaskSize: "contain",
-                    WebkitMaskPosition: "center",
-                  }}
-                >
-                  <img
-                    alt=""
-                    src={img3DWireframeOutlinePolygonSphereGlobeShape2}
-                    className="size-full object-contain object-center"
-                  />
-                </div>
+                <FinaxisWireframeGlobeSpin>
+                  <div
+                    className="mask-alpha mask-no-clip mask-no-repeat relative size-full"
+                    style={{
+                      maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                      WebkitMaskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                      maskSize: "contain",
+                      maskPosition: "center",
+                      WebkitMaskSize: "contain",
+                      WebkitMaskPosition: "center",
+                    }}
+                  >
+                    <img
+                      alt=""
+                      src={img3DWireframeOutlinePolygonSphereGlobeShape2}
+                      className="size-full object-contain object-center"
+                    />
+                  </div>
+                </FinaxisWireframeGlobeSpin>
               </div>
             </div>
             <div className="relative z-[1] mt-3 inline-block rounded border-2 border-white px-2 py-1 font-['Satoshi:Medium',sans-serif] text-[14px] text-white">
@@ -566,7 +569,7 @@ export default function FinaxisMobileHome() {
                 </figcaption>
               </div>
               <blockquote className="mt-3 font-['Satoshi:Regular',sans-serif] text-[14px] leading-relaxed text-[#333]">
-                “Prismatech helped us find high-performing campaigns in minutes. Financing the POS upgrade was painless.”
+                “Prismatech made financing our POS rollout straightforward. Fast approvals and clear terms — the upgrade was painless.”
               </blockquote>
             </figure>
             <figure className="rounded-xl border border-[#272727]/30 bg-white p-4 shadow-sm">

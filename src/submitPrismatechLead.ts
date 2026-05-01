@@ -1,7 +1,7 @@
 /** Inbox for all site leads (popup + contact forms). */
 export const PRISMATECH_LEAD_EMAIL = "info@prismatech.com";
 
-export type LeadSource = "popup" | "contact_desktop" | "contact_mobile";
+export type LeadSource = "popup" | "contact_desktop" | "contact_mobile" | "newsletter";
 
 export type LeadPayload = {
   name: string;

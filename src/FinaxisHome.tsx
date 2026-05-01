@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useState, type FormEvent } from "re
 import { createPortal } from "react-dom";
 import { FinaxisDesktopScaleContext } from "./FinaxisDesktopScaleContext";
 import { INDUSTRY_PANELS } from "./finaxisIndustriesData";
+import { FinaxisWireframeGlobeSpin } from "./FinaxisWireframeGlobeSpin";
 import { submitPrismatechLead } from "./submitPrismatechLead";
 
 const FINAXIS_LEAD_POPUP_DELAY_MS = 5 * 1000;
@@ -493,23 +494,23 @@ export default function FinaxisHome() {
         className="absolute left-[40px] top-[1004px] z-[6] max-w-[560px] scroll-mt-[150px] pb-20 pr-6"
       >
         <div className="finaxis-notable-work-services font-['Satoshi:Medium',sans-serif]">
-          <span>Website Design</span>
+          <span>POS financing</span>
           <span className="finaxis-notable-work-sep" aria-hidden="true">
             {"\u2732"}
           </span>
-          <span>Branding</span>
+          <span>Lease-to-own</span>
           <span className="finaxis-notable-work-sep" aria-hidden="true">
             {"\u2732"}
           </span>
-          <span>Strategy Consulting</span>
+          <span>Store rollout</span>
           <span className="finaxis-notable-work-sep" aria-hidden="true">
             {"\u2732"}
           </span>
-          <span>Digital - Marketing</span>
+          <span>Monthly &amp; transaction plans</span>
           <span className="finaxis-notable-work-sep" aria-hidden="true">
             {"\u2732"}
           </span>
-          <span>Analytics & Report</span>
+          <span>Merchant support</span>
         </div>
       </div>
       <p className="absolute font-['Satoshi:Bold',sans-serif] leading-[normal] left-[1408px] not-italic text-[26px] text-black top-[1169px] uppercase whitespace-nowrap" data-node-id="76:152">
@@ -703,7 +704,7 @@ export default function FinaxisHome() {
           <p className="leading-[29.25px]">Mark Henry</p>
         </div>
         <p className="-translate-x-1/2 absolute font-['Inter:Regular',sans-serif] font-normal leading-[19px] left-[1641.5px] text-[14px] top-[743px] w-[291px]" data-node-id="76:336">
-          PrismaTech helped us find high-performing campaigns in minutes. The platform makes marketing brands effortless.”
+          “Prismatech made financing our POS rollout straightforward. Fast approvals, clear terms — we upgraded checkout without squeezing cash flow.”
         </p>
       </div>
       <div className="absolute flex items-center justify-center left-[1850px] size-[24px] top-[744px]">
@@ -1353,27 +1354,29 @@ export default function FinaxisHome() {
             </div>
             <div className="pointer-events-none absolute inset-x-3 bottom-3 top-[10%] flex items-end justify-end">
               <div className="relative aspect-square h-[280px] w-[280px] max-h-full max-w-full shrink-0 sm:h-[300px] sm:w-[300px]">
-                <div
-                  className="mask-alpha mask-no-clip mask-no-repeat relative size-full"
-                  data-node-id="76:409"
-                  data-name="3d-wireframe-outline-polygon-sphere-globe-shape 1"
-                  style={{
-                    maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
-                    WebkitMaskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
-                    maskSize: "contain",
-                    maskPosition: "center",
-                    maskRepeat: "no-repeat",
-                    WebkitMaskSize: "contain",
-                    WebkitMaskPosition: "center",
-                    WebkitMaskRepeat: "no-repeat",
-                  }}
-                >
-                  <img
-                    alt=""
-                    className="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-center"
-                    src={img3DWireframeOutlinePolygonSphereGlobeShape2}
-                  />
-                </div>
+                <FinaxisWireframeGlobeSpin>
+                  <div
+                    className="mask-alpha mask-no-clip mask-no-repeat relative size-full"
+                    data-node-id="76:409"
+                    data-name="3d-wireframe-outline-polygon-sphere-globe-shape 1"
+                    style={{
+                      maskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                      WebkitMaskImage: `url('${img3DWireframeOutlinePolygonSphereGlobeShape1}')`,
+                      maskSize: "contain",
+                      maskPosition: "center",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskSize: "contain",
+                      WebkitMaskPosition: "center",
+                      WebkitMaskRepeat: "no-repeat",
+                    }}
+                  >
+                    <img
+                      alt=""
+                      className="pointer-events-none absolute inset-0 size-full max-w-none object-contain object-center"
+                      src={img3DWireframeOutlinePolygonSphereGlobeShape2}
+                    />
+                  </div>
+                </FinaxisWireframeGlobeSpin>
               </div>
             </div>
           </div>
@@ -1771,7 +1774,7 @@ export default function FinaxisHome() {
             <p className="leading-[35px]">{`Worried about hefty payoffs? Don't be!`}</p>
           </div>
           <div className="-translate-y-1/2 absolute flex flex-col font-['Caladea:Italic',sans-serif] italic justify-center leading-[0] left-[33px] text-[24px] text-black top-[715.5px] w-[631px]" data-node-id="76:608">
-            <p className="leading-[35px]">Prismatechinc understands the importance of the point of sale in scaling businesses, which is why we offer reliable POS financing options available on a monthly or transaction-based basis.</p>
+            <p className="leading-[35px]">Prismatech Inc. understands the importance of the point of sale in scaling businesses, which is why we offer reliable POS financing options available on a monthly or transaction-based basis.</p>
           </div>
           <div className="absolute h-[558px] left-0 top-0 w-[683px]" data-node-id="76:609">
             <div className="absolute inset-[-1.7%_-1.54%_-4.21%_-3.29%]">
