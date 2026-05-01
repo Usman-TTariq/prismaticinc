@@ -62,6 +62,14 @@ const FIGMA_CORE_SERVICE_CARD = {
   border: 1.15,
 } as const;
 
+/** Service highlights — same four as core services / Results (About, stats card, footer) */
+const WHAT_WE_DO_BEST_LABELS = [
+  "Merchant Services",
+  "Social Media Marketing",
+  "Content Marketing",
+  "PPC Advertising",
+] as const;
+
 /** Same delay as Finaxis home lead popup */
 const AGENCY_LEAD_POPUP_DELAY_MS = 5 * 1000;
 
@@ -645,7 +653,7 @@ export default function PrismaAgencyLanding() {
                 <div>
                   <p className="text-lg font-bold text-white sm:text-xl">What We Do Best</p>
                   <ul className="mt-4 space-y-3.5">
-                    {["Performance Marketing", "Social Media Growth", "Content Marketing"].map((label) => (
+                    {WHAT_WE_DO_BEST_LABELS.map((label) => (
                       <li key={label} className="flex items-center gap-3.5 text-[17px] font-semibold text-white sm:text-[18px]">
                         <span
                           className="flex size-6 shrink-0 items-center justify-center rounded-full text-[12px] text-white"
@@ -992,7 +1000,7 @@ export default function PrismaAgencyLanding() {
                     </div>
                   </div>
                   <ul className="space-y-2.5 border-t border-white/10 pt-6">
-                    {["Social Media Growth", "Content Marketing", "PPC Advertising"].map((label) => (
+                    {WHAT_WE_DO_BEST_LABELS.map((label) => (
                       <li
                         key={label}
                         className="flex items-center gap-3 rounded-full border border-white/[0.06] bg-[#0e0e0e] px-4 py-2.5"
@@ -1226,21 +1234,13 @@ export default function PrismaAgencyLanding() {
                 <div>
                   <p className="text-base font-bold text-white sm:text-lg">Services</p>
                   <ul className="mt-5 space-y-3 text-[15px] text-[#c8c8c8] sm:text-[16px]">
-                    <li>
-                      <a href="#services" className="transition hover:text-white">
-                        Social Media Marketing
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#services" className="transition hover:text-white">
-                        PPC Advertising
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#services" className="transition hover:text-white">
-                        Content Marketing
-                      </a>
-                    </li>
+                    {WHAT_WE_DO_BEST_LABELS.map((label) => (
+                      <li key={label}>
+                        <a href="#services" className="transition hover:text-white">
+                          {label}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="sm:col-span-2 lg:col-span-1">
